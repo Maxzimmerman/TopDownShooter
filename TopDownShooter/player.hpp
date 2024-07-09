@@ -1,15 +1,18 @@
+#pragma once
 #include <raylib.h>
 #include "bullet.hpp"
 #include <iostream>
 #include "vector"
+#include "shooter.hpp"
 
 class Player {
 private:
-	Vector2 position;
 	Color color;
 	int radius;
 	float speed;
 public:
+	Vector2 position;
+	Shooter shooter;
 	std::vector<Bullet> bullets;
 	Player();
 	void Draw();
@@ -18,5 +21,6 @@ public:
 	void MoveUp();
 	void MoveDown();
 	void FireBullet(const char* direction);
+	Vector2 GetCenter();
 	Rectangle getRect();
 };

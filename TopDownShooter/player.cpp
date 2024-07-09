@@ -1,4 +1,6 @@
 #include "player.hpp"
+#include "shooter.hpp"
+#include "bullet.hpp"
 
 Player::Player() {
 	position.x = GetScreenWidth() / 2;
@@ -41,4 +43,11 @@ Rectangle Player::getRect() {
 	rect.width = radius;
 	rect.height = radius;
 	return rect;
+}
+
+Vector2 Player::GetCenter() {
+	Vector2 p;
+	p.x = position.x + radius / 2;
+	p.y = position.y + radius / 2;
+	return p;
 }
