@@ -1,9 +1,10 @@
 #include <raylib.h>
 #include "game.hpp"
+#include "camera.hpp"
 
 int main() {
-	int width = 1000;
-	int height = 500;
+	int width = 1500;
+	int height = 1000;
 	const char* title = "Gamewindow";
 	InitWindow(width, height, title);
 	SetTargetFPS(240);
@@ -12,6 +13,9 @@ int main() {
 
 	while (!WindowShouldClose()) {
 		BeginDrawing();
+			BeginMode2D(game.camera.camera);
+
+			DrawRectangle(60, 230, 60, 60, WHITE);
 
 			game.HandleInput();
 
@@ -19,6 +23,7 @@ int main() {
 			game.Draw();
 			game.Update();
 
+		EndMode2D();
 		EndDrawing();
 	}
 }

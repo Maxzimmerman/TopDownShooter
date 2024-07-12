@@ -10,7 +10,7 @@ private:
 	bool active;
 	int speed;
 public:
-	Bullet(Vector2 posision, int speed, const char* direction, Color color);
+	Bullet(Vector2 posision, int speed, Color color);
 	Bullet();
 	void Draw();
 	void Update();

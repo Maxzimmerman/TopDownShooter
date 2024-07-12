@@ -20,7 +20,6 @@ public:
 	void MoveRight();
 	void MoveUp();
 	void MoveDown();
-	void FireBullet(const char* direction);
 	Vector2 GetCenter();
 	Rectangle getRect();
 };

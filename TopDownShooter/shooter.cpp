@@ -2,8 +2,8 @@
 #include <cmath> // For atan2f
 
 Shooter::Shooter() {
-    rect.width = 60;
-    rect.height = 60;
+    rect.width = 10;
+    rect.height = 30;
     position.x = rect.width / 2;
     position.y = rect.height / 2;
     speed = 50;
@@ -27,20 +27,20 @@ void Shooter::Rotate(Vector2 playerPosition) {
     rotation = atan2f(dy, dx) * (180.0f / PI);
 
     // Distance from the player center to the shooter center
-    float distanceFromPlayer = 150.0f;
+    float distanceFromPlayer = 40.0f;
     position.x = playerPosition.x + cos(rotation * (PI / 180.0f)) * distanceFromPlayer;
     position.y = playerPosition.y + sin(rotation * (PI / 180.0f)) * distanceFromPlayer;
 
     // Update rect position for drawing
-    rect.x = position.x - rect.width / 2;
-    rect.y = position.y - rect.height / 2;
+    rect.x = position.x;
+    rect.y = position.y;
 }
 
 Rectangle Shooter::GetRect() {
     return { position.x - rect.width / 2, position.y - rect.height / 2, rect.width, rect.height };
 }
 
-void Shooter::FireBullets(const char* direction)
+void Shooter::FireBullets()
 {
-    bullets.push_back(Bullet({ position.x + rect.width / 2, position.y + rect.height / 2 }, 600, direction, GREEN));
+    bullets.push_back(Bullet({ position.x + rect.width / 2, position.y + rect.height / 2 }, 600, GREEN));
 }

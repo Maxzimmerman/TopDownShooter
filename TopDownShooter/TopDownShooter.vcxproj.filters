@@ -28,6 +28,9 @@
     <ClCompile Include="shooter.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="player.hpp">
@@ -40,6 +43,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="shooter.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

@@ -31,11 +31,6 @@ void Player::MoveDown() {
 	position.y += speed * GetFrameTime();
 }
 
-void Player::FireBullet(const char* direction)
-{
-	bullets.push_back(Bullet({ position.x + radius / 2, position.y + radius / 2}, 600, direction, GREEN));
-}
-
 Rectangle Player::getRect() {
 	Rectangle rect;
 	rect.x = position.x - radius / 2;
