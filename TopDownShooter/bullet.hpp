@@ -7,9 +7,9 @@ private:
 	Vector2 position;
 	const char* direction;
 	Color color;
-	bool active;
 	int speed;
 public:
+	bool active;
 	Bullet(Vector2 posision, int speed, Color color);
 	Bullet();
 	void Draw();

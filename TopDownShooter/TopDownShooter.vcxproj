@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="enemy.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
@@ -149,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="bullet.hpp" />
     <ClInclude Include="camera.hpp" />
+    <ClInclude Include="enemy.hpp" />
     <ClInclude Include="game.hpp" />
     <ClInclude Include="player.hpp" />
     <ClInclude Include="shooter.hpp" />

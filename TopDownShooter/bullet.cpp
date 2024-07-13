@@ -24,25 +24,11 @@ void Bullet::Draw() {
 }
 
 void Bullet::Update() {
+	position.x += 0 * GetFrameTime();
+	position.y += 1000 * GetFrameTime();
 	if (active) {
-		Vector2 mousePosition = GetMousePosition();
-		Vector2 directionToMouse = { mousePosition.x - position.x, mousePosition.y - position.y };
-
-		// Normalize the direction vector
-		float length = sqrt(directionToMouse.x * directionToMouse.x + directionToMouse.y * directionToMouse.y);
-		if (length != 0) {
-			directionToMouse.x /= length;
-			directionToMouse.y /= length;
-		}
-
-		// Update position with normalized direction and speed
-		position.x += directionToMouse.x * speed;
-		position.y += directionToMouse.y * speed;
-
-
-		if (position.y > GetScreenHeight() || position.y < 0 && position.x > GetScreenWidth() || position.x < 0) {
+		if (position.y > GetScreenHeight() || position.y < 0 || position.x > GetScreenWidth() || position.x < 0) {
 			active = false;
-			std::cout << "dec" << std::endl;
 		}
 	}
 }
