@@ -13,13 +13,14 @@ int main() {
 
 	while (!WindowShouldClose()) {
 		BeginDrawing();
+		BeginMode2D(game.camera.camera);
 
 			game.HandleInput();
 
 			ClearBackground(BLACK);
 			game.Draw();
 			game.Update();
-
+			EndMode2D();
 		EndDrawing();
 	}
 }

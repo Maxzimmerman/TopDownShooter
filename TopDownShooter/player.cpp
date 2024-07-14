@@ -2,6 +2,7 @@
 #include "shooter.hpp"
 #include "bullet.hpp"
 #include <raymath.h>
+#include "camera.hpp"
 
 Player::Player() {
 	position.x = GetScreenWidth() / 2;
@@ -43,9 +44,11 @@ Rectangle Player::getRect() {
 	return rect;
 }
 
-void Player::ShootBullets(Vector2 mousePosition)
+void Player::ShootBullets(Vector2 mousePosition, Cameraa& camera)
 {
-	Vector2 direction = Vector2Subtract(mousePosition, GetCenter());
+	Vector2 worldMouserPosition = GetScreenToWorld2D(mousePosition, camera.camera);
+
+	Vector2 direction = Vector2Subtract(worldMouserPosition, GetCenter());
 	direction = Vector2Normalize(direction);
 	bullets.push_back(Bullet(GetCenter(), direction, 600, GREEN));
 }

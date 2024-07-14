@@ -8,6 +8,7 @@ private:
 	Vector2 direction;
 	Color color;
 	int speed;
+	float liveTime;
 public:
 	bool active;
 	Bullet(Vector2 position, Vector2 direction, int speed, Color color);

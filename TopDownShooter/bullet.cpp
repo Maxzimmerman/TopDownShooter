@@ -13,6 +13,7 @@ Bullet::Bullet(Vector2 posision, Vector2 direction, int speed, Color color)
 	this->color = color;
 	this->speed = speed;
 	this->active = true;
+	this->liveTime = 1.0f;
 }
 
 Bullet::Bullet() {
@@ -27,10 +28,8 @@ void Bullet::Draw() {
 void Bullet::Update() {
 	position = Vector2Add(position, Vector2Scale(direction, 1000 * GetFrameTime()));
 	if (active) {
-		if (position.y > GetScreenHeight() || position.y < 0) {
-			active = false;
-		}
-		else if (position.x > GetScreenWidth() || position.x < 0) {
+		liveTime -= GetFrameTime();
+		if (liveTime <= 0) {
 			active = false;
 		}
 	}

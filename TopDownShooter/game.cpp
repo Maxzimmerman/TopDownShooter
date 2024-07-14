@@ -10,6 +10,7 @@ Game::Game()
 
 void Game::Draw() {
 	player.Draw();
+	camera.Draw();
 
 	for (auto& bullet: player.bullets) {
 		bullet.Draw();
@@ -24,7 +25,7 @@ void Game::Update() {
 	for (auto& bullet : player.bullets) {
 		bullet.Update();
 	}
-
+	camera.Update(player.GetCenter());
 	DeleteInactiveLasers();
 	SpawnEnemies();
 	DeleteInactiveEnemies();
@@ -41,7 +42,7 @@ void Game::Update() {
 
 void Game::HandleInput() {
 	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-		player.ShootBullets(GetMousePosition());
+		player.ShootBullets(GetMousePosition(), camera);
 	}
 	else if (IsKeyDown(KEY_W))
 		player.MoveUp();

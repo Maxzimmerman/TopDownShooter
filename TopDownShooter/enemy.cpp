@@ -37,13 +37,6 @@ void Enemy::Update(Vector2 playerPosition, const std::vector<Enemy>& enemies) {
             }
         }
     }
-
-    // Boundary check
-    if (active) {
-        if (position.y > GetScreenHeight() || position.y < 0 || position.x > GetScreenWidth() || position.x < 0) {
-            active = false;
-        }
-    }
 }
 
 Rectangle Enemy::GetRect() {

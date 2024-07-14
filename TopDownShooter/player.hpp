@@ -4,6 +4,7 @@
 #include <iostream>
 #include "vector"
 #include "shooter.hpp"
+#include "camera.hpp"
 
 class Player {
 private:
@@ -22,6 +23,6 @@ public:
 	void MoveDown();
 	Vector2 GetCenter();
 	Rectangle getRect();
-	void ShootBullets(Vector2 mousePosition);
+	void ShootBullets(Vector2 mousePosition, Cameraa& camera);
 	void TakeLivePoints();
 };
