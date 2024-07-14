@@ -5,12 +5,12 @@ class Bullet {
 private:
 	Rectangle rect;
 	Vector2 position;
-	const char* direction;
+	Vector2 direction;
 	Color color;
 	int speed;
 public:
 	bool active;
-	Bullet(Vector2 posision, int speed, Color color);
+	Bullet(Vector2 position, Vector2 direction, int speed, Color color);
 	Bullet();
 	void Draw();
 	void Update();

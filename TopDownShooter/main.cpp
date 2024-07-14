@@ -13,9 +13,6 @@ int main() {
 
 	while (!WindowShouldClose()) {
 		BeginDrawing();
-			BeginMode2D(game.camera.camera);
-
-			DrawRectangle(60, 230, 60, 60, WHITE);
 
 			game.HandleInput();
 
@@ -23,7 +20,6 @@ int main() {
 			game.Draw();
 			game.Update();
 
-		EndMode2D();
 		EndDrawing();
 	}
 }

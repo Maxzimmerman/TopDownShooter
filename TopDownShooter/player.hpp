@@ -10,9 +10,9 @@ private:
 	Color color;
 	int radius;
 	float speed;
+	int livePoints;
 public:
 	Vector2 position;
-	Shooter shooter;
 	std::vector<Bullet> bullets;
 	Player();
 	void Draw();
@@ -22,4 +22,6 @@ public:
 	void MoveDown();
 	Vector2 GetCenter();
 	Rectangle getRect();
+	void ShootBullets(Vector2 mousePosition);
+	void TakeLivePoints();
 };

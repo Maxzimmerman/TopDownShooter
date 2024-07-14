@@ -1,4 +1,6 @@
 #include <raylib.h>
+#include <iostream>
+#include <vector>
 
 class Enemy {
 public:
@@ -8,6 +10,6 @@ public:
 	Enemy();
 	Enemy(Vector2 position);
 	void Draw();
-	void Update(Vector2 playerPosition);
+	void Update(Vector2 playerPosition, const std::vector<Enemy>& enemies);
 	Rectangle GetRect();
 };

@@ -15,4 +15,6 @@ public:
 	void Draw();
 	void DeleteInactiveLasers();
 	void SpawnEnemies();
+	void DeleteInactiveEnemies();
+	void CheckCollisions();
 };

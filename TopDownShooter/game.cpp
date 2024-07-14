@@ -9,11 +9,9 @@ Game::Game()
 }
 
 void Game::Draw() {
-	camera.Draw();
 	player.Draw();
-	player.shooter.Draw();
 
-	for (auto& bullet: player.shooter.bullets) {
+	for (auto& bullet: player.bullets) {
 		bullet.Draw();
 	}
 
@@ -23,25 +21,27 @@ void Game::Draw() {
 }
 
 void Game::Update() {
-	DeleteInactiveLasers();
-	player.shooter.Update(player.GetCenter());
-	camera.Update(player.position);
-	SpawnEnemies();
-	std::cout << player.shooter.bullets.size() << std::endl;
-	std::cout << enemies.size() << std::endl;
-
-	for (auto& bullet: player.shooter.bullets) {
+	for (auto& bullet : player.bullets) {
 		bullet.Update();
 	}
 
+	DeleteInactiveLasers();
+	SpawnEnemies();
+	DeleteInactiveEnemies();
+
 	for (auto& enemy : enemies) {
-		enemy.Update(player.GetCenter());
+		enemy.Update(player.GetCenter(), enemies);
 	}
+
+	CheckCollisions();
+
+	std::cout << player.bullets.size() << std::endl;
+	std::cout << enemies.size() << std::endl;
 }
 
 void Game::HandleInput() {
 	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-		player.shooter.FireBullets();
+		player.ShootBullets(GetMousePosition());
 	}
 	else if (IsKeyDown(KEY_W))
 		player.MoveUp();
@@ -66,14 +66,49 @@ void Game::DeleteInactiveLasers() {
 
 void Game::SpawnEnemies()
 {
-	if (enemies.size() < 10000) {
-		for (int i = 0; i < 10; i++) {
+	if (enemies.size() < 5) {
+		for (int i = 0; i < 5; i++) {
 			auto x = GetRandomValue(0, GetScreenWidth());
 			auto y = GetRandomValue(0, GetScreenHeight());
 			Vector2 vec;
 			vec.x = x;
 			vec.y = y;
 			enemies.push_back(Enemy(vec));
+		}
+	}
+}
+
+void Game::DeleteInactiveEnemies()
+{
+	for (auto it = enemies.begin(); it != enemies.end();) {
+		if (!it->active)
+			it = enemies.erase(it);
+		else
+			++it;
+	}
+}
+
+void Game::CheckCollisions()
+{
+	// Bullets -> Enemy
+	for (auto& bullet : player.bullets) {
+		auto it = enemies.begin();
+		while (it != enemies.end()) {
+			if (CheckCollisionRecs(it->GetRect(), bullet.GetRect())) {
+				it = enemies.erase(it);
+				bullet.active = false;
+			}
+			else {
+				++it;
+			}
+		}
+	}
+
+	// Enemy -> Player
+
+	for (auto& enemy : enemies) {
+		if (CheckCollisionRecs(player.getRect(), enemy.GetRect())) {
+			player.TakeLivePoints();
 		}
 	}
 }

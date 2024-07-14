@@ -18,5 +18,5 @@ public:
 	void Update(Vector2 playesrPosition);
 	void Rotate(Vector2 playerPosition);
 	Rectangle GetRect();
-	void FireBullets();
+	void FireBullets(Vector2 playerPosition, Vector2 mousePosition);
 };

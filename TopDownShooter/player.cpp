@@ -1,6 +1,7 @@
 #include "player.hpp"
 #include "shooter.hpp"
 #include "bullet.hpp"
+#include <raymath.h>
 
 Player::Player() {
 	position.x = GetScreenWidth() / 2;
@@ -8,11 +9,13 @@ Player::Player() {
 	radius = 5;
 	speed = 200;
 	color = WHITE;
+	livePoints = 5;
 }
 
 void Player::Draw()
 {
-	DrawCircle(position.x, position.y, radius, color);
+	if(livePoints > 0)
+		DrawCircle(position.x, position.y, radius, color);
 }
 
 void Player::MoveLeft() {
@@ -38,6 +41,18 @@ Rectangle Player::getRect() {
 	rect.width = radius;
 	rect.height = radius;
 	return rect;
+}
+
+void Player::ShootBullets(Vector2 mousePosition)
+{
+	Vector2 direction = Vector2Subtract(mousePosition, GetCenter());
+	direction = Vector2Normalize(direction);
+	bullets.push_back(Bullet(GetCenter(), direction, 600, GREEN));
+}
+
+void Player::TakeLivePoints()
+{
+	livePoints--;
 }
 
 Vector2 Player::GetCenter() {

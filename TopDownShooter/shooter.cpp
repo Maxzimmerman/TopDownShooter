@@ -1,5 +1,6 @@
 #include "shooter.hpp"
 #include <cmath> // For atan2f
+#include "raymath.h"
 
 Shooter::Shooter() {
     rect.width = 10;
@@ -40,7 +41,9 @@ Rectangle Shooter::GetRect() {
     return { position.x - rect.width / 2, position.y - rect.height / 2, rect.width, rect.height };
 }
 
-void Shooter::FireBullets()
+void Shooter::FireBullets(Vector2 playerPosition, Vector2 mousePosition)
 {
-    bullets.push_back(Bullet({ position.x + rect.width / 2, position.y + rect.height / 2 }, 600, GREEN));
+    Vector2 direction = Vector2Subtract(mousePosition, playerPosition);
+    direction = Vector2Normalize(direction);
+    bullets.push_back(Bullet(playerPosition, direction, 600, GREEN));
 }
