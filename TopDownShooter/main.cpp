@@ -25,6 +25,7 @@ int main() {
 		switch (currentScreen)
 		{
 		case HOME:
+			ClearBackground(BLACK);
 			mousePosition = GetMousePosition();
 			DrawRectangle(button.x, button.y, button.width, button.height, WHITE);
 			if (CheckCollisionPointRec(mousePosition, button)) {
@@ -35,11 +36,10 @@ int main() {
 			}
 			break;
 		case LEVEL1:
+			ClearBackground(BLACK);
 			BeginMode2D(game.camera.camera);
 
 			game.HandleInput();
-
-			ClearBackground(BLACK);
 			game.Draw();
 			game.Update();
 
@@ -53,6 +53,7 @@ int main() {
 		case LEVEL2:
 			break;
 		case ENDING:
+			ClearBackground(BLACK);
 			mousePosition = GetMousePosition();
 			DrawText("Gameover", GetScreenWidth() / 2, GetScreenHeight() / 2, 50, RED);
 			DrawRectangle(button.x, button.y, button.width, button.height, WHITE);
