@@ -11,8 +11,8 @@ private:
 	Color color;
 	int radius;
 	float speed;
-	int livePoints;
 public:
+	int livePoints;
 	Vector2 position;
 	std::vector<Bullet> bullets;
 	Player();

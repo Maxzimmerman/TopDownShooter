@@ -11,6 +11,8 @@ Game::Game()
 void Game::Draw() {
 	player.Draw();
 	camera.Draw();
+	DrawLivePoinst();
+	DrawLevel();
 
 	for (auto& bullet: player.bullets) {
 		bullet.Draw();
@@ -35,9 +37,6 @@ void Game::Update() {
 	}
 
 	CheckCollisions();
-
-	std::cout << player.bullets.size() << std::endl;
-	std::cout << enemies.size() << std::endl;
 }
 
 void Game::HandleInput() {
@@ -67,10 +66,10 @@ void Game::DeleteInactiveLasers() {
 
 void Game::SpawnEnemies()
 {
-	if (enemies.size() < 5) {
-		for (int i = 0; i < 5; i++) {
-			auto x = GetRandomValue(0, GetScreenWidth());
-			auto y = GetRandomValue(0, GetScreenHeight());
+	if (enemies.size() < 10) {
+		for (int i = 0; i < 10; i++) {
+			auto x = GetRandomValue(0, player.position.x + 200);
+			auto y = GetRandomValue(0, player.position.y + 200);
 			Vector2 vec;
 			vec.x = x;
 			vec.y = y;
@@ -106,10 +105,34 @@ void Game::CheckCollisions()
 	}
 
 	// Enemy -> Player
-
-	for (auto& enemy : enemies) {
-		if (CheckCollisionRecs(player.getRect(), enemy.GetRect())) {
+	auto it = enemies.begin();
+	while (it != enemies.end()) {
+		if (CheckCollisionRecs(it->GetRect(), player.getRect())) {
+			it = enemies.erase(it);
 			player.TakeLivePoints();
 		}
+		else {
+			++it;
+		}
 	}
+}
+
+void Game::DrawLivePoinst()
+{
+	std::cout << player.livePoints << std::endl;
+	for (int i = 0; i < player.livePoints; i++) {
+		DrawRectangle(player.position.x + 500 + i * 40, player.position.y + 450, 30, 30, RED);
+	}
+}
+
+bool Game::CheckIfGameEnd()
+{
+	if (player.livePoints <= 0 || enemies.size() <= 0)
+		return true;
+	return false;
+}
+
+void Game::DrawLevel()
+{
+	DrawText("Level " + level, player.position.x + 530, player.position.y - 450, 20, WHITE);
 }

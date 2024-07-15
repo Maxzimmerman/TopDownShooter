@@ -9,6 +9,7 @@ public:
 	Player player;
 	Cameraa camera;
 	std::vector<Enemy> enemies;
+	int level = 1;
 	Game();
 	void HandleInput();
 	void Update();
@@ -17,4 +18,7 @@ public:
 	void SpawnEnemies();
 	void DeleteInactiveEnemies();
 	void CheckCollisions();
+	void DrawLivePoinst();
+	bool CheckIfGameEnd();
+	void DrawLevel();
 };
