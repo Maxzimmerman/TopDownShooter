@@ -26,7 +26,7 @@ void Bullet::Draw() {
 }
 
 void Bullet::Update() {
-	position = Vector2Add(position, Vector2Scale(direction, 1000 * GetFrameTime()));
+	position = Vector2Add(position, Vector2Scale(direction, speed * GetFrameTime()));
 	if (active) {
 		liveTime -= GetFrameTime();
 		if (liveTime <= 0) {

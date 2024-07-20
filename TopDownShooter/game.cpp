@@ -66,8 +66,8 @@ void Game::DeleteInactiveLasers() {
 
 void Game::SpawnEnemies()
 {
-	if (enemies.size() < 10) {
-		for (int i = 0; i < 10; i++) {
+	if (enemies.size() < 5) {
+		for (int i = 0; i < 5; i++) {
 			auto x = GetRandomValue(0, player.position.x + 200);
 			auto y = GetRandomValue(0, player.position.y + 200);
 			Vector2 vec;

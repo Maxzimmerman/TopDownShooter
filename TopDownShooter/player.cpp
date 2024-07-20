@@ -48,7 +48,9 @@ void Player::ShootBullets(Vector2 mousePosition, Cameraa& camera)
 {
 	Vector2 worldMouserPosition = GetScreenToWorld2D(mousePosition, camera.camera);
 
+	// bekomme richtungs vektor
 	Vector2 direction = Vector2Subtract(worldMouserPosition, GetCenter());
+
 	direction = Vector2Normalize(direction);
 	bullets.push_back(Bullet(GetCenter(), direction, 600, GREEN));
 }
