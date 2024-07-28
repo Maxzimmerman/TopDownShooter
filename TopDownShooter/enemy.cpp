@@ -31,7 +31,7 @@ void Enemy::Update(Vector2 playerPosition, const std::vector<Enemy>& enemies) {
             Vector2 distance = Vector2Subtract(position, other.position);
             float length = Vector2Length(distance);
 
-            if (length < 10.0f) { // Separation distance
+            if (length < 20.0f) { // Separation distance
                 Vector2 repulsion = Vector2Normalize(distance);
                 position = Vector2Add(position, Vector2Scale(repulsion, (20.0f - length) * 100 * GetFrameTime())); // Increase the repulsion force
             }

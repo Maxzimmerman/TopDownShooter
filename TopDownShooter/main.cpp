@@ -14,10 +14,6 @@ int main() {
 	GameScreen currentScreen = HOME;
 	Game game;
 
-	Rectangle button = { GetScreenWidth() / 2, GetScreenHeight() / 2, 80, 30 };
-	bool buttonClicked = false;
-	Vector2 mousePosition = { 0, 0 };
-
 	while (!WindowShouldClose()) {
 
 		BeginDrawing();
@@ -26,9 +22,8 @@ int main() {
 		{
 		case HOME:
 			ClearBackground(BLACK);
-			mousePosition = GetMousePosition();
-			DrawRectangle(button.x, button.y, button.width, button.height, WHITE);
-			if (CheckCollisionPointRec(mousePosition, button)) {
+			game.startButton.Draw();
+			if (game.startButton.CheckIfButtonClicked()) {
 				if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
 					currentScreen = LEVEL1;
 					break;
@@ -54,10 +49,8 @@ int main() {
 			break;
 		case ENDING:
 			ClearBackground(BLACK);
-			mousePosition = GetMousePosition();
-			DrawText("Gameover", GetScreenWidth() / 2, GetScreenHeight() / 2, 50, RED);
-			DrawRectangle(button.x, button.y, button.width, button.height, WHITE);
-			if (CheckCollisionPointRec(mousePosition, button)) {
+			game.restartButton.Draw();
+			if (game.restartButton.CheckIfButtonClicked()) {
 				if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
 					currentScreen = LEVEL1;
 					break;

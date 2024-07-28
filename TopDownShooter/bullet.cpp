@@ -26,7 +26,8 @@ void Bullet::Draw() {
 }
 
 void Bullet::Update() {
-	position = Vector2Add(position, Vector2Scale(direction, speed * GetFrameTime()));
+	Vector2 distance = { direction.x * speed * GetFrameTime(), direction.y * speed * GetFrameTime() };
+	position = { position.x + distance.x, position.y + distance.y };
 	if (active) {
 		liveTime -= GetFrameTime();
 		if (liveTime <= 0) {

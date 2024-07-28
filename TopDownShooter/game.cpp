@@ -5,12 +5,13 @@
 
 Game::Game()
 {
-	
+	startButton.text = "Start";
+	restartButton.text = "Restart";
 }
 
 void Game::Draw() {
-	player.Draw();
-	camera.Draw();
+	startButton.Draw();
+	restartButton.Draw();
 	DrawLivePoinst();
 	DrawLevel();
 
@@ -94,7 +95,7 @@ void Game::CheckCollisions()
 	for (auto& bullet : player.bullets) {
 		auto it = enemies.begin();
 		while (it != enemies.end()) {
-			if (CheckCollisionRecs(it->GetRect(), bullet.GetRect())) {
+			if (CheckCollision(it->position, bullet.position)) {
 				it = enemies.erase(it);
 				bullet.active = false;
 			}
@@ -107,7 +108,7 @@ void Game::CheckCollisions()
 	// Enemy -> Player
 	auto it = enemies.begin();
 	while (it != enemies.end()) {
-		if (CheckCollisionRecs(it->GetRect(), player.getRect())) {
+		if (CheckCollision(it->position, player.position)) {
 			it = enemies.erase(it);
 			player.TakeLivePoints();
 		}
@@ -135,4 +136,14 @@ bool Game::CheckIfGameEnd()
 void Game::DrawLevel()
 {
 	DrawText("Level " + level, player.position.x + 530, player.position.y - 450, 20, WHITE);
+}
+
+bool Game::CheckCollision(Vector2 firstRect, Vector2 secondRect)
+{
+	Vector2 direction = { secondRect.x - firstRect.x, secondRect.y - firstRect.y };
+	float distance = sqrt(direction.x * direction.x + direction.y * direction.y);
+	if (distance <= 3.0f)
+		return true;
+	else
+		return false;
 }

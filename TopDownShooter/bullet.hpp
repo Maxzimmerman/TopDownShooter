@@ -4,12 +4,12 @@
 class Bullet {
 private:
 	Rectangle rect;
-	Vector2 position;
 	Vector2 direction;
 	Color color;
 	int speed;
 	float liveTime;
 public:
+	Vector2 position;
 	bool active;
 	Bullet(Vector2 position, Vector2 direction, int speed, Color color);
 	Bullet();

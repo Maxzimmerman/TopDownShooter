@@ -2,8 +2,8 @@
 #include <raylib.h>
 #include "player.hpp"
 #include "camera.hpp"
-#include "enemy.hpp"
-#include 
+#include "enemy.hpp" 
+#include "button.hpp"
 
 class Game {
 public:
@@ -11,7 +11,8 @@ public:
 	Cameraa camera;
 	std::vector<Enemy> enemies;
 	int level = 1;
-
+	Button startButton;
+	Button restartButton;
 	Game();
 	void HandleInput();
 	void Update();
@@ -23,4 +24,5 @@ public:
 	void DrawLivePoinst();
 	bool CheckIfGameEnd();
 	void DrawLevel();
+	bool CheckCollision(Vector2 firstRect, Vector2 secondRect);
 };
