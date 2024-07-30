@@ -24,5 +24,6 @@ public:
 	void DrawLivePoinst();
 	bool CheckIfGameEnd();
 	void DrawLevel();
-	bool CheckCollision(Vector2 firstRect, Vector2 secondRect);
+	bool CheckCollision(Rectangle firstRect, Rectangle secondRect);
+	void Reset();
 };

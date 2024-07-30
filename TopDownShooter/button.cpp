@@ -3,7 +3,7 @@
 #include <iostream>
 
 Button::Button() {
-	rect = { GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f, 80, 20 };
+	rect = { GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f, 100, 30 };
 	buttonClicked = false;
 	this->text = "default Text";
 	color = WHITE;
@@ -11,16 +11,19 @@ Button::Button() {
 
 void Button::Draw()
 {
-	DrawRectangle(rect.x, rect.y, rect.width, rect.height, color);
-	DrawText(text, rect.x, rect.y, 20, GREEN);
+	if(!buttonClicked)
+		DrawRectangle(rect.x, rect.y, rect.width, rect.height, color);
+		DrawText(text, rect.x, rect.y, 20, GREEN);
 }
 
 bool Button::CheckIfButtonClicked() {
 	Vector2 mousePosition = GetMousePosition();
-	Vector2 direction = { rect.x - mousePosition.x, rect.y - mousePosition.y };
-	float distance = sqrt(direction.x*direction.x+direction.y*direction.y);
-	if (distance < 3)
-		return true;
+	if ((mousePosition.x >= rect.x) && (mousePosition.x <= (rect.x + rect.width)) &&
+		(mousePosition.y >= rect.y) && (mousePosition.y <= (rect.y + rect.height))) {
+		if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+			return true;
+		}
+	}
 	else
 		return false;
 }

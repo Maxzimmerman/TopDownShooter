@@ -2,6 +2,7 @@
 #include <iostream>
 #include "vector"
 #include "bullet.hpp"
+#include <string>
 
 Game::Game()
 {
@@ -10,8 +11,7 @@ Game::Game()
 }
 
 void Game::Draw() {
-	startButton.Draw();
-	restartButton.Draw();
+	player.Draw();
 	DrawLivePoinst();
 	DrawLevel();
 
@@ -95,7 +95,7 @@ void Game::CheckCollisions()
 	for (auto& bullet : player.bullets) {
 		auto it = enemies.begin();
 		while (it != enemies.end()) {
-			if (CheckCollision(it->position, bullet.position)) {
+			if (CheckCollision(it->GetRect(), bullet.GetRect())) {
 				it = enemies.erase(it);
 				bullet.active = false;
 			}
@@ -108,7 +108,7 @@ void Game::CheckCollisions()
 	// Enemy -> Player
 	auto it = enemies.begin();
 	while (it != enemies.end()) {
-		if (CheckCollision(it->position, player.position)) {
+		if (CheckCollision(it->GetRect(), player.getRect())) {
 			it = enemies.erase(it);
 			player.TakeLivePoints();
 		}
@@ -120,7 +120,6 @@ void Game::CheckCollisions()
 
 void Game::DrawLivePoinst()
 {
-	std::cout << player.livePoints << std::endl;
 	for (int i = 0; i < player.livePoints; i++) {
 		DrawRectangle(player.position.x + 500 + i * 40, player.position.y + 450, 30, 30, RED);
 	}
@@ -135,15 +134,23 @@ bool Game::CheckIfGameEnd()
 
 void Game::DrawLevel()
 {
-	DrawText("Level " + level, player.position.x + 530, player.position.y - 450, 20, WHITE);
+	DrawText((" Level " + std::to_string(level)).c_str(), player.position.x + 530, player.position.y - 450, 20, WHITE);
 }
 
-bool Game::CheckCollision(Vector2 firstRect, Vector2 secondRect)
-{
-	Vector2 direction = { secondRect.x - firstRect.x, secondRect.y - firstRect.y };
-	float distance = sqrt(direction.x * direction.x + direction.y * direction.y);
-	if (distance <= 3.0f)
+bool Game::CheckCollision(Rectangle firstRect, Rectangle secondRect)
+{	
+	// x from right and left
+	if ((firstRect.x + firstRect.width) >= secondRect.x && firstRect.x <= (secondRect.x + secondRect.width) &&
+		// top and bottom
+		(firstRect.y + firstRect.height) >= secondRect.y && firstRect.y <= (secondRect.y + secondRect.height)) {
 		return true;
-	else
+	}
+	else {
 		return false;
+	}
+}
+
+void Game::Reset()
+{
+	player.livePoints = 5;
 }
