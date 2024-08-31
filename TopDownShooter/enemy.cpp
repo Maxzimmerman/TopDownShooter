@@ -21,19 +21,19 @@ void Enemy::Draw() {
 
 void Enemy::Update(Vector2 playerPosition, const std::vector<Enemy>& enemies) {
     // Follow player
-    Vector2 direction = Vector2Subtract(playerPosition, position);
+    Vector2 direction = { playerPosition.x - position.x, playerPosition.y - position.y };
     direction = Vector2Normalize(direction);
-    position = Vector2Add(position, Vector2Scale(direction, 100 * GetFrameTime()));
+    position = { position.x + direction.x * 100 * GetFrameTime(), position.y + direction.y * 100 * GetFrameTime() };
 
     // Separation from other enemies
     for (const auto& other : enemies) {
         if (&other != this) { // Avoid self-check
-            Vector2 distance = Vector2Subtract(position, other.position);
-            float length = Vector2Length(distance);
+            Vector2 distance = { position.x - other.position.x, position.y - other.position.y };
+            float length = sqrt(distance.x * distance.x + distance.y * distance.y);
 
             if (length < 20.0f) { // Separation distance
                 Vector2 repulsion = Vector2Normalize(distance);
-                position = Vector2Add(position, Vector2Scale(repulsion, (20.0f - length) * 100 * GetFrameTime())); // Increase the repulsion force
+                position = { position.x + repulsion.x * (20.0f - length) * 100 * GetFrameTime(), position.y + repulsion.y * (20.0f - length) * 100 * GetFrameTime() };
             }
         }
     }

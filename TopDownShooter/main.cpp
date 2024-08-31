@@ -11,9 +11,10 @@ enum GameState {
 
 void DrawMainMenu(Game& game, GameState& currentState) {
 	ClearBackground(BLACK);
-	game.startButton.Draw();
-	if (game.startButton.CheckIfButtonClicked()) {
-		game.startButton.buttonClicked = true;
+	game.startButton->Draw();
+
+	if (game.startButton->CheckIfButtonClicked()) {
+		game.startButton->buttonClicked = true;
 		currentState = LEVEL1;
 	}
 
@@ -23,15 +24,20 @@ void DrawMainMenu(Game& game, GameState& currentState) {
 
 void DrawLevel1(Game& game, GameState& currentState) {
 	ClearBackground(BLACK);
-	BeginMode2D(game.camera.camera);
+	BeginMode2D(game.camera->camera);
 
 	game.level = 1;
 	game.HandleInput();
 	game.Draw();
 	game.Update();
 
-	if (game.CheckIfGameEnd()) {
+	if (game.CheckIfLose()) {
+		game.Reset(10);
 		currentState = GAMEOVER;
+	}
+	else if (game.CheckIfWon()) {
+		game.Reset(30);
+		currentState = LEVEL2;
 	}
 
 	if (IsKeyPressed(KEY_ESCAPE))
@@ -42,15 +48,20 @@ void DrawLevel1(Game& game, GameState& currentState) {
 
 void DrawLevel2(Game& game, GameState& currentState) {
 	ClearBackground(BLACK);
-	BeginMode2D(game.camera.camera);
+	BeginMode2D(game.camera->camera);
 
 	game.level = 2;
 	game.HandleInput();
 	game.Draw();
 	game.Update();
 
-	if (game.CheckIfGameEnd()) {
+	if (game.CheckIfLose()) {
+		game.Reset(10);
 		currentState = GAMEOVER;
+	}
+	else if (game.CheckIfWon()) {
+		game.Reset(10);
+		currentState = LEVEL1;
 	}
 
 	if (IsKeyPressed(KEY_ESCAPE))
@@ -61,15 +72,13 @@ void DrawLevel2(Game& game, GameState& currentState) {
 
 void DrawGameOver(Game& game, GameState& currentState) {
 	ClearBackground(BLACK);
-	game.restartButton.Draw();
-	if (game.restartButton.CheckIfButtonClicked()) {
-		game.restartButton.buttonClicked = true;
-		game.Reset();
-		currentState = LEVEL1;
-	}
+	DrawText("GAMEOVER", GetScreenWidth() / 2, GetScreenHeight() / 2, 20, RED);
+	DrawText("Press ESC to leave", GetScreenWidth() / 2, GetScreenHeight() / 2 + 30, 10, RED);
 
-	if (IsKeyPressed(KEY_ESCAPE))
-		CloseWindow();
+	game.goBackToHomeButton->Draw();
+	if (game.goBackToHomeButton->CheckIfButtonClicked()) {
+		currentState = MAINMENU;
+	}
 }
 
 int main() {

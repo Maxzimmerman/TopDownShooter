@@ -7,23 +7,26 @@
 
 class Game {
 public:
-	Player player;
-	Cameraa camera;
+	Player* player = new Player();
+	Cameraa* camera = new Cameraa();
 	std::vector<Enemy> enemies;
 	int level = 1;
-	Button startButton;
-	Button restartButton;
+	Button* startButton = new Button();
+	Button* restartButton = new Button();
+	Button* goBackToHomeButton = new Button();
 	Game();
 	void HandleInput();
 	void Update();
 	void Draw();
 	void DeleteInactiveLasers();
-	void SpawnEnemies();
+	void SpawnEnemies(int howManyEnemies);
 	void DeleteInactiveEnemies();
 	void CheckCollisions();
 	void DrawLivePoinst();
-	bool CheckIfGameEnd();
+	bool CheckIfWon();
+	bool CheckIfLose();
 	void DrawLevel();
 	bool CheckCollision(Rectangle firstRect, Rectangle secondRect);
-	void Reset();
+	void Reset(int howManyEnemies);
+	void DrawMagazineAndPrgressbar();
 };
