@@ -7,13 +7,13 @@
 
 class Game {
 public:
-	Player* player = new Player();
-	Cameraa* camera = new Cameraa();
+	Player player;
+	Cameraa camera;
 	std::vector<Enemy> enemies;
 	int level = 1;
-	Button* startButton = new Button();
-	Button* restartButton = new Button();
-	Button* goBackToHomeButton = new Button();
+	Button startButton;
+	Button restartButton;
+	Button goBackToHomeButton;
 	Game();
 	void HandleInput();
 	void Update();

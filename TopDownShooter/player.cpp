@@ -11,11 +11,6 @@ Player::Player() {
 	speed = 200;
 	color = WHITE;
 	livePoints = 5;
-	magazine = 5;
-	magazineSize = 5;
-	refillTime = 2.f;
-	refillTimer = 0.0f;
-	reloadPregress = 0.0f;
 }
 
 void Player::Draw()
@@ -26,16 +21,7 @@ void Player::Draw()
 
 void Player::Update()
 {
-	if (magazine < magazineSize) {
-		refillTimer += GetFrameTime();
-		reloadPregress = refillTimer / refillTime;
-
-		if (refillTimer >= refillTime) {
-			magazine++;
-			refillTimer = 0.0f;
-			reloadPregress = 0.0f;
-		}
-	}
+	
 }
 
 void Player::MoveLeft() {
@@ -63,29 +49,24 @@ Rectangle Player::getRect() {
 	return rect;
 }
 
-void Player::ShootBullets(Vector2 mousePosition, Cameraa* camera)
-{
-	if (magazine > 0) {
-		Vector2 worldMouserPosition = GetScreenToWorld2D(mousePosition, camera->camera);
-
-		// bekomme richtungs vektor
-		Vector2 direction = { worldMouserPosition.x - position.x, worldMouserPosition.y - position.y };
-
-		direction = Vector2Normalize(direction);
-		bullets.push_back(Bullet(GetCenter(), direction, 600, GREEN));
-		decrementMagazine();
-	}
-}
-
 void Player::TakeLivePoints()
 {
 	livePoints--;
 }
 
-void Player::DrawReloadProgressBar(Vector2 barPosition, int width, int height)
+int Player::getLivePoints()
 {
-	DrawRectangle(barPosition.x, barPosition.y, width, height, DARKGRAY);
-	DrawRectangle(barPosition.x, barPosition.y, width * reloadPregress, height, GREEN);
+	return livePoints;
+}
+
+void Player::setLivePoints(int livePoints)
+{
+	this->livePoints = livePoints;
+}
+
+Vector2 Player::getPosition()
+{
+	return position;
 }
 
 Vector2 Player::GetCenter() {

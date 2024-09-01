@@ -1,20 +1,14 @@
 #include <raylib.h>
 #include "game.hpp"
 #include "camera.hpp"
-
-enum GameState {
-	MAINMENU,
-	LEVEL1,
-	LEVEL2,
-	GAMEOVER,
-};
+#include "GameState.hpp"
 
 void DrawMainMenu(Game& game, GameState& currentState) {
 	ClearBackground(BLACK);
-	game.startButton->Draw();
+	game.startButton.Draw();
 
-	if (game.startButton->CheckIfButtonClicked()) {
-		game.startButton->buttonClicked = true;
+	if (game.startButton.CheckIfButtonClicked()) {
+		game.startButton.buttonClicked = true;
 		currentState = LEVEL1;
 	}
 
@@ -24,7 +18,7 @@ void DrawMainMenu(Game& game, GameState& currentState) {
 
 void DrawLevel1(Game& game, GameState& currentState) {
 	ClearBackground(BLACK);
-	BeginMode2D(game.camera->camera);
+	BeginMode2D(game.camera.camera);
 
 	game.level = 1;
 	game.HandleInput();
@@ -48,7 +42,7 @@ void DrawLevel1(Game& game, GameState& currentState) {
 
 void DrawLevel2(Game& game, GameState& currentState) {
 	ClearBackground(BLACK);
-	BeginMode2D(game.camera->camera);
+	BeginMode2D(game.camera.camera);
 
 	game.level = 2;
 	game.HandleInput();
@@ -75,8 +69,8 @@ void DrawGameOver(Game& game, GameState& currentState) {
 	DrawText("GAMEOVER", GetScreenWidth() / 2, GetScreenHeight() / 2, 20, RED);
 	DrawText("Press ESC to leave", GetScreenWidth() / 2, GetScreenHeight() / 2 + 30, 10, RED);
 
-	game.goBackToHomeButton->Draw();
-	if (game.goBackToHomeButton->CheckIfButtonClicked()) {
+	game.goBackToHomeButton.Draw();
+	if (game.goBackToHomeButton.CheckIfButtonClicked()) {
 		currentState = MAINMENU;
 	}
 }

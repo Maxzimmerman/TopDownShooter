@@ -144,9 +144,12 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="shooter.cpp" />
+    <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="WeaponType.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bullet.hpp" />
@@ -154,8 +157,11 @@
     <ClInclude Include="camera.hpp" />
     <ClInclude Include="enemy.hpp" />
     <ClInclude Include="game.hpp" />
+    <ClInclude Include="GameState.hpp" />
+    <ClInclude Include="Level.hpp" />
     <ClInclude Include="player.hpp" />
     <ClInclude Include="shooter.hpp" />
+    <ClInclude Include="Weapon.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

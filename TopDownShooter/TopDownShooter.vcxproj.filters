@@ -37,6 +37,15 @@
     <ClCompile Include="button.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponType.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="player.hpp">
@@ -58,6 +67,15 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="button.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

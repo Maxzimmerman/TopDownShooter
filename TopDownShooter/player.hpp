@@ -1,9 +1,9 @@
 #pragma once
+#include "Weapon.hpp"
 #include <raylib.h>
 #include "bullet.hpp"
 #include <iostream>
 #include "vector"
-#include "shooter.hpp"
 #include "camera.hpp"
 
 class Player {
@@ -11,15 +11,10 @@ private:
 	Color color;
 	int radius;
 	float speed;
-	int magazine;
-	int magazineSize;
-	float refillTime;
-	float refillTimer;
-	float reloadPregress;
-public:
 	int livePoints;
 	Vector2 position;
-	std::vector<Bullet> bullets;
+public:
+	Weapon weapon;
 	Player();
 	void Draw();
 	void Update();
@@ -29,10 +24,8 @@ public:
 	void MoveDown();
 	Vector2 GetCenter();
 	Rectangle getRect();
-	void ShootBullets(Vector2 mousePosition, Cameraa* camera);
 	void TakeLivePoints();
-	int getMagazine() { return magazine; }
-	void setMagazine(int magazine) { this->magazine = magazine; }
-	void decrementMagazine() { magazine--; }
-	void DrawReloadProgressBar(Vector2 barPosition, int width, int height);
+	int getLivePoints();
+	void setLivePoints(int livePoints);
+	Vector2 getPosition();
 };
