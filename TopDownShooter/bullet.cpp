@@ -3,12 +3,14 @@
 #include <iostream>
 #include <raymath.h>
 
-Bullet::Bullet(Vector2 posision, Vector2 direction, int speed, Color color)
+Bullet::Bullet(const Vector2& position, const Vector2& direction, int speed, const Color& color)
 {
-	this->position.x = posision.x;
-	this->position.y = posision.y;
+	this->position.x = position.x;
+	this->position.y = position.y;
 	this->rect.width = 5;
 	this->rect.height = 10;
+	this->rect.x = this->position.x;
+	this->rect.y = this->position.y;
 	this->direction = direction;
 	this->color = color;
 	this->speed = speed;

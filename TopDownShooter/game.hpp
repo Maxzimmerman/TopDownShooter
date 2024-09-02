@@ -7,13 +7,13 @@
 
 class Game {
 public:
-	Player player;
-	Cameraa camera;
-	std::vector<Enemy> enemies;
+	Player* player;
+	Cameraa* camera;
+	std::vector<std::unique_ptr<Enemy>> enemies;
 	int level = 1;
-	Button startButton;
-	Button restartButton;
-	Button goBackToHomeButton;
+	Button* startButton;
+	Button* restartButton;
+	Button* goBackToHomeButton;
 	Game();
 	void HandleInput();
 	void Update();
@@ -26,7 +26,7 @@ public:
 	bool CheckIfWon();
 	bool CheckIfLose();
 	void DrawLevel();
-	bool CheckCollision(Rectangle firstRect, Rectangle secondRect);
+	bool CheckCollision(const Rectangle& firstRect, const Rectangle& secondRect);
 	void Reset(int howManyEnemies);
 	void DrawMagazineAndPrgressbar();
 };

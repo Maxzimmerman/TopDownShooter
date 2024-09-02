@@ -11,7 +11,7 @@ private:
 public:
 	Vector2 position;
 	bool active;
-	Bullet(Vector2 position, Vector2 direction, int speed, Color color);
+	Bullet(const Vector2& position, const Vector2& direction, int speed, const Color& color);
 	Bullet();
 	void Draw();
 	void Update();

@@ -1,5 +1,4 @@
 #include "player.hpp"
-#include "shooter.hpp"
 #include "bullet.hpp"
 #include <raymath.h>
 #include "camera.hpp"

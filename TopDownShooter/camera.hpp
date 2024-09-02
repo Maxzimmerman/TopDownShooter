@@ -5,7 +5,7 @@ class Cameraa {
 public:
 	Camera2D camera;
 	Cameraa();
-	Cameraa(Vector2 playerPosition);
+	Cameraa(Vector2& playerPosition);
 	void Draw();
-	void Update(Vector2 playerPosition);
+	void Update(const Vector2& playerPosition);
 };

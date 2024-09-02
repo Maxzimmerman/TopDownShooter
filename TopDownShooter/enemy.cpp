@@ -19,7 +19,7 @@ void Enemy::Draw() {
 	DrawCircle(position.x, position.y, radius, RED);
 }
 
-void Enemy::Update(Vector2 playerPosition, const std::vector<Enemy>& enemies) {
+void Enemy::Update(const Vector2& playerPosition, const std::vector<std::unique_ptr<Enemy>>& enemies) {
     // Follow player
     Vector2 direction = { playerPosition.x - position.x, playerPosition.y - position.y };
     direction = Vector2Normalize(direction);
@@ -27,8 +27,8 @@ void Enemy::Update(Vector2 playerPosition, const std::vector<Enemy>& enemies) {
 
     // Separation from other enemies
     for (const auto& other : enemies) {
-        if (&other != this) { // Avoid self-check
-            Vector2 distance = { position.x - other.position.x, position.y - other.position.y };
+        if (other.get() != this) { // Avoid self-check
+            Vector2 distance = { position.x - other->position.x, position.y - other->position.y };
             float length = sqrt(distance.x * distance.x + distance.y * distance.y);
 
             if (length < 20.0f) { // Separation distance

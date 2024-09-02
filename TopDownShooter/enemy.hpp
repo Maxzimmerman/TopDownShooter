@@ -10,6 +10,6 @@ public:
 	Enemy();
 	Enemy(Vector2 position);
 	void Draw();
-	void Update(Vector2 playerPosition, const std::vector<Enemy>& enemies);
+	void Update(const Vector2& playerPosition, const std::vector<std::unique_ptr<Enemy>>& enemies);
 	Rectangle GetRect();
 };

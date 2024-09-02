@@ -6,40 +6,45 @@
 
 Game::Game()
 {
-	startButton.text = "Start";
-	restartButton.text = "Restart";
-	goBackToHomeButton.text = "Home";
-	player.weapon.setType(RIFLE);
+	player = new Player();
+	camera = new Cameraa();
+	startButton = new Button();
+	restartButton = new Button();
+	goBackToHomeButton = new Button();
+	startButton->text = "Start";
+	restartButton->text = "Restart";
+	goBackToHomeButton->text = "Home";
+	player->weapon.setType(RIFLE);
 	SpawnEnemies(6);
 }
 
 void Game::Draw() {
-	player.Draw();
+	player->Draw();
 	DrawLivePoinst();
 	DrawLevel();
 	DrawMagazineAndPrgressbar();
 
-	for (auto& bullet: player.weapon.bullets) {
+	for (auto& bullet: player->weapon.bullets) {
 		bullet.Draw();
 	}
 
 	for (auto& enemy : enemies) {
-		enemy.Draw();
+		enemy->Draw();
 	}
 }
 
 void Game::Update() {
-	for (auto& bullet : player.weapon.bullets) {
+	for (auto& bullet : player->weapon.bullets) {
 		bullet.Update();
 	}
-	camera.Update(player.GetCenter());
-	player.Update();
-	player.weapon.Update();
+	camera->Update(player->GetCenter());
+	player->Update();
+	player->weapon.Update();
 	DeleteInactiveLasers();
 	DeleteInactiveEnemies();
 
 	for (auto& enemy : enemies) {
-		enemy.Update(player.GetCenter(), enemies);
+		enemy->Update(player->GetCenter(), enemies);
 	}
 
 	CheckCollisions();
@@ -47,22 +52,22 @@ void Game::Update() {
 
 void Game::HandleInput() {
 	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-		player.weapon.ShootBullets(GetMousePosition(), camera, player.GetCenter());
+		player->weapon.ShootBullets(GetMousePosition(), player->GetCenter());
 	}
 	else if (IsKeyDown(KEY_W))
-		player.MoveUp();
+		player->MoveUp();
 	else if (IsKeyDown(KEY_S))
-		player.MoveDown();
+		player->MoveDown();
 	else if (IsKeyDown(KEY_A))
-		player.MoveLeft();
+		player->MoveLeft();
 	else if (IsKeyDown(KEY_D))
-		player.MoveRight();
+		player->MoveRight();
 }
 
 void Game::DeleteInactiveLasers() {
-	for (auto it = player.weapon.bullets.begin(); it != player.weapon.bullets.end();) {
+	for (auto it = player->weapon.bullets.begin(); it != player->weapon.bullets.end();) {
 		if (!it->active) {
-			it = player.weapon.bullets.erase(it);
+			it = player->weapon.bullets.erase(it);
 		}
 		else {
 			++it;
@@ -74,12 +79,12 @@ void Game::SpawnEnemies(int howManyEnemies)
 {
 	if (enemies.size() < howManyEnemies) {
 		for (int i = 0; i < howManyEnemies; i++) {
-			auto x = GetRandomValue(0, player.getPosition().x + 200);
-			auto y = GetRandomValue(0, player.getPosition().y + 200);
+			auto x = GetRandomValue(0, player->getPosition().x + 200);
+			auto y = GetRandomValue(0, player->getPosition().y + 200);
 			Vector2 vec;
 			vec.x = x;
 			vec.y = y;
-			enemies.push_back(Enemy(vec));
+			enemies.push_back(std::make_unique<Enemy>(vec));
 		}
 	}
 }
@@ -87,7 +92,7 @@ void Game::SpawnEnemies(int howManyEnemies)
 void Game::DeleteInactiveEnemies()
 {
 	for (auto it = enemies.begin(); it != enemies.end();) {
-		if (!it->active)
+		if (!(*it)->active)
 			it = enemies.erase(it);
 		else
 			++it;
@@ -97,10 +102,10 @@ void Game::DeleteInactiveEnemies()
 void Game::CheckCollisions()
 {
 	// Bullets -> Enemy
-	for (auto& bullet : player.weapon.bullets) {
+	for (auto& bullet : player->weapon.bullets) {
 		auto it = enemies.begin();
 		while (it != enemies.end()) {
-			if (CheckCollision(it->GetRect(), bullet.GetRect())) {
+			if (CheckCollision((*it)->GetRect(), bullet.GetRect())) {
 				it = enemies.erase(it);
 				bullet.active = false;
 			}
@@ -113,9 +118,9 @@ void Game::CheckCollisions()
 	// Enemy -> Player
 	auto it = enemies.begin();
 	while (it != enemies.end()) {
-		if (CheckCollision(it->GetRect(), player.getRect())) {
+		if (CheckCollision((*it)->GetRect(), player->getRect())) {
 			it = enemies.erase(it);
-			player.TakeLivePoints();
+			player->TakeLivePoints();
 		}
 		else {
 			it++;
@@ -125,8 +130,8 @@ void Game::CheckCollisions()
 
 void Game::DrawLivePoinst()
 {
-	for (int i = 0; i < player.getLivePoints(); i++) {
-		DrawRectangle(player.getPosition().x + 500 + i * 40, player.getPosition().y + 450, 30, 30, RED);
+	for (int i = 0; i < player->getLivePoints(); i++) {
+		DrawRectangle(player->getPosition().x + 500 + i * 40, player->getPosition().y + 450, 30, 30, RED);
 	}
 }
 
@@ -139,7 +144,7 @@ bool Game::CheckIfWon()
 }
 
 bool Game::CheckIfLose() {
-	if (player.getLivePoints() <= 0)
+	if (player->getLivePoints() <= 0)
 		return true;
 	else
 		return false;
@@ -147,10 +152,10 @@ bool Game::CheckIfLose() {
 
 void Game::DrawLevel()
 {
-	DrawText((" Level " + std::to_string(level)).c_str(), player.getPosition().x + 530, player.getPosition().y - 450, 20, WHITE);
+	DrawText((" Level " + std::to_string(level)).c_str(), player->getPosition().x + 530, player->getPosition().y - 450, 20, WHITE);
 }
 
-bool Game::CheckCollision(Rectangle firstRect, Rectangle secondRect)
+bool Game::CheckCollision(const Rectangle& firstRect, const Rectangle& secondRect)
 {	
 	// x from right and left
 	if ((firstRect.x + firstRect.width) >= secondRect.x && firstRect.x <= (secondRect.x + secondRect.width) &&
@@ -165,12 +170,12 @@ bool Game::CheckCollision(Rectangle firstRect, Rectangle secondRect)
 
 void Game::Reset(int howManyEnemies)
 {
-	player.setLivePoints(5);
+	player->setLivePoints(5);
 	SpawnEnemies(howManyEnemies);
 }
 
 void Game::DrawMagazineAndPrgressbar()
 {
-	player.weapon.DrawReloadProgressBar({player.getPosition().x - 500, player.getPosition().y + 450}, 120, 30);
-	DrawText((std::to_string(player.weapon.getMagazine())).c_str(), player.getPosition().x - 445, player.getPosition().y + 456, 20, WHITE);
+	player->weapon.DrawReloadProgressBar({player->getPosition().x - 500, player->getPosition().y + 450}, 120, 30);
+	DrawText((std::to_string(player->weapon.getMagazine())).c_str(), player->getPosition().x - 445, player->getPosition().y + 456, 20, WHITE);
 }

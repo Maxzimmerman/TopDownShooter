@@ -45,11 +45,10 @@ void Weapon::Update()
 	}
 }
 
-void Weapon::ShootBullets(Vector2 mousePosition, Cameraa& camera, Vector2 playerCenter)
+void Weapon::ShootBullets(const Vector2& mousePosition, const Vector2& playerCenter)
 {
 	if (magazine > 0) {
 		Vector2 direction = { mousePosition.x - position.x, mousePosition.y - position.y };
-
 		direction = Vector2Normalize(direction);
 		bullets.push_back(Bullet(playerCenter, direction, 600, GREEN));
 		decrementMagazine();
@@ -71,13 +70,13 @@ void Weapon::decrementMagazine()
 	magazine--;
 }
 
-void Weapon::DrawReloadProgressBar(Vector2 barPosition, int width, int height)
+void Weapon::DrawReloadProgressBar(const Vector2& barPosition, int width, int height)
 {
 	DrawRectangle(barPosition.x, barPosition.y, width, height, DARKGRAY);
 	DrawRectangle(barPosition.x, barPosition.y, width * reloadPregress, height, GREEN);
 }
 
-void Weapon::setType(WeaponType type)
+void Weapon::setType(const WeaponType& type)
 {
 	this->type = type;
 }

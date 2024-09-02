@@ -8,10 +8,14 @@ Cameraa::Cameraa()
 	camera.zoom = 1.0f;
 }
 
+Cameraa::Cameraa(Vector2& playerPosition)
+{
+}
+
 void Cameraa::Draw() {
 	BeginMode2D(camera);
 }
 
-void Cameraa::Update(Vector2 playerPosition) {
+void Cameraa::Update(const Vector2& playerPosition) {
 	camera.target = playerPosition;
 }

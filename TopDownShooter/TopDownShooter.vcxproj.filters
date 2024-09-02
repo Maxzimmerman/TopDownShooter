@@ -25,9 +25,6 @@
     <ClCompile Include="bullet.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="shooter.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="camera.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -55,9 +52,6 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="bullet.hpp">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="shooter.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="camera.hpp">

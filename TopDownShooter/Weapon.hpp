@@ -22,11 +22,11 @@ public:
 	Weapon();
 	void Draw();
 	void Update();
-	void ShootBullets(Vector2 mousePosition, Cameraa& camera, Vector2 playerCenter);
+	void ShootBullets(const Vector2& mousePosition, const Vector2& playerCenter);
 	int getMagazine();
 	void setMagazine(int magazine);
 	void decrementMagazine();
-	void DrawReloadProgressBar(Vector2 barPosition, int width, int height);
-	void setType(WeaponType type);
+	void DrawReloadProgressBar(const Vector2& barPosition, int width, int height);
+	void setType(const WeaponType& type);
 };
 

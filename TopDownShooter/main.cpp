@@ -2,78 +2,7 @@
 #include "game.hpp"
 #include "camera.hpp"
 #include "GameState.hpp"
-
-void DrawMainMenu(Game& game, GameState& currentState) {
-	ClearBackground(BLACK);
-	game.startButton.Draw();
-
-	if (game.startButton.CheckIfButtonClicked()) {
-		game.startButton.buttonClicked = true;
-		currentState = LEVEL1;
-	}
-
-	if (IsKeyPressed(KEY_ESCAPE))
-		CloseWindow();
-}
-
-void DrawLevel1(Game& game, GameState& currentState) {
-	ClearBackground(BLACK);
-	BeginMode2D(game.camera.camera);
-
-	game.level = 1;
-	game.HandleInput();
-	game.Draw();
-	game.Update();
-
-	if (game.CheckIfLose()) {
-		game.Reset(10);
-		currentState = GAMEOVER;
-	}
-	else if (game.CheckIfWon()) {
-		game.Reset(30);
-		currentState = LEVEL2;
-	}
-
-	if (IsKeyPressed(KEY_ESCAPE))
-		CloseWindow();
-
-	EndMode2D();
-}
-
-void DrawLevel2(Game& game, GameState& currentState) {
-	ClearBackground(BLACK);
-	BeginMode2D(game.camera.camera);
-
-	game.level = 2;
-	game.HandleInput();
-	game.Draw();
-	game.Update();
-
-	if (game.CheckIfLose()) {
-		game.Reset(10);
-		currentState = GAMEOVER;
-	}
-	else if (game.CheckIfWon()) {
-		game.Reset(10);
-		currentState = LEVEL1;
-	}
-
-	if (IsKeyPressed(KEY_ESCAPE))
-		CloseWindow();
-
-	EndMode2D();
-}
-
-void DrawGameOver(Game& game, GameState& currentState) {
-	ClearBackground(BLACK);
-	DrawText("GAMEOVER", GetScreenWidth() / 2, GetScreenHeight() / 2, 20, RED);
-	DrawText("Press ESC to leave", GetScreenWidth() / 2, GetScreenHeight() / 2 + 30, 10, RED);
-
-	game.goBackToHomeButton.Draw();
-	if (game.goBackToHomeButton.CheckIfButtonClicked()) {
-		currentState = MAINMENU;
-	}
-}
+#include "Level.hpp"
 
 int main() {
 	int width = 1500;
@@ -83,7 +12,11 @@ int main() {
 	SetTargetFPS(240);
 
 	GameState currentState = MAINMENU;
-	Game game;
+	Game* game = new Game();
+	Level* mainMenu = new Level();
+	Level* gameOver = new Level();
+	Level* lvl1 = new Level();
+	Level* lvl2 = new Level();
 
 	while (!WindowShouldClose()) {
 
@@ -92,16 +25,16 @@ int main() {
 		switch (currentState)
 		{
 		case MAINMENU:
-			DrawMainMenu(game, currentState);
+			mainMenu->Draw(*game, currentState, LEVEL1, 0);
 			break;
 		case LEVEL1:
-			DrawLevel1(game, currentState);
+			lvl1->Draw(*game, currentState, LEVEL2, 1);
 			break;
 		case LEVEL2:
-			DrawLevel2(game, currentState);
+			lvl2->Draw(*game, currentState, MAINMENU, 2);
 			break;
 		case GAMEOVER:
-			DrawGameOver(game, currentState);
+			gameOver->Draw(*game, currentState, MAINMENU, 0);
 			break;
 		default:
 			break;
