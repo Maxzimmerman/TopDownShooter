@@ -4,6 +4,7 @@
 #include "camera.hpp"
 
 Player::Player() {
+	weapon = std::make_unique<Weapon>();
 	position.x = GetScreenWidth() / 2;
 	position.y = GetScreenHeight() / 2;
 	radius = 5;

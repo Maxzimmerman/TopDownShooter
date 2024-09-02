@@ -14,7 +14,7 @@ private:
 	int livePoints;
 	Vector2 position;
 public:
-	Weapon weapon;
+	std::unique_ptr<Weapon> weapon;
 	Player();
 	void Draw();
 	void Update();

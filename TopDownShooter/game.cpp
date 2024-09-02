@@ -14,7 +14,7 @@ Game::Game()
 	startButton->text = "Start";
 	restartButton->text = "Restart";
 	goBackToHomeButton->text = "Home";
-	player->weapon.setType(RIFLE);
+	player->weapon->setType(RIFLE);
 	SpawnEnemies(6);
 }
 
@@ -24,7 +24,7 @@ void Game::Draw() {
 	DrawLevel();
 	DrawMagazineAndPrgressbar();
 
-	for (auto& bullet: player->weapon.bullets) {
+	for (auto& bullet: player->weapon->bullets) {
 		bullet.Draw();
 	}
 
@@ -34,12 +34,12 @@ void Game::Draw() {
 }
 
 void Game::Update() {
-	for (auto& bullet : player->weapon.bullets) {
+	for (auto& bullet : player->weapon->bullets) {
 		bullet.Update();
 	}
 	camera->Update(player->GetCenter());
 	player->Update();
-	player->weapon.Update();
+	player->weapon->Reload();
 	DeleteInactiveLasers();
 	DeleteInactiveEnemies();
 
@@ -52,7 +52,7 @@ void Game::Update() {
 
 void Game::HandleInput() {
 	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-		player->weapon.ShootBullets(GetMousePosition(), player->GetCenter());
+		player->weapon->ShootBullets(GetMousePosition(), player->GetCenter());
 	}
 	else if (IsKeyDown(KEY_W))
 		player->MoveUp();
@@ -61,13 +61,13 @@ void Game::HandleInput() {
 	else if (IsKeyDown(KEY_A))
 		player->MoveLeft();
 	else if (IsKeyDown(KEY_D))
-		player->MoveRight();
+		player->MoveRight();		
 }
 
 void Game::DeleteInactiveLasers() {
-	for (auto it = player->weapon.bullets.begin(); it != player->weapon.bullets.end();) {
+	for (auto it = player->weapon->bullets.begin(); it != player->weapon->bullets.end();) {
 		if (!it->active) {
-			it = player->weapon.bullets.erase(it);
+			it = player->weapon->bullets.erase(it);
 		}
 		else {
 			++it;
@@ -102,7 +102,7 @@ void Game::DeleteInactiveEnemies()
 void Game::CheckCollisions()
 {
 	// Bullets -> Enemy
-	for (auto& bullet : player->weapon.bullets) {
+	for (auto& bullet : player->weapon->bullets) {
 		auto it = enemies.begin();
 		while (it != enemies.end()) {
 			if (CheckCollision((*it)->GetRect(), bullet.GetRect())) {
@@ -176,6 +176,6 @@ void Game::Reset(int howManyEnemies)
 
 void Game::DrawMagazineAndPrgressbar()
 {
-	player->weapon.DrawReloadProgressBar({player->getPosition().x - 500, player->getPosition().y + 450}, 120, 30);
-	DrawText((std::to_string(player->weapon.getMagazine())).c_str(), player->getPosition().x - 445, player->getPosition().y + 456, 20, WHITE);
+	player->weapon->DrawReloadProgressBar({player->getPosition().x - 500, player->getPosition().y + 450}, 120, 30);
+	DrawText((std::to_string(player->weapon->getMagazine())).c_str(), player->getPosition().x - 445, player->getPosition().y + 456, 20, WHITE);
 }

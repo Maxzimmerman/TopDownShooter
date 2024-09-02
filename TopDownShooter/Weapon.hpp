@@ -22,6 +22,7 @@ public:
 	Weapon();
 	void Draw();
 	void Update();
+	void Reload();
 	void ShootBullets(const Vector2& mousePosition, const Vector2& playerCenter);
 	int getMagazine();
 	void setMagazine(int magazine);

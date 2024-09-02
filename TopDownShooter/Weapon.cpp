@@ -14,33 +14,24 @@ Weapon::Weapon()
 
 void Weapon::Draw()
 {
-	
+
 }
 
 void Weapon::Update()
 {
-	if (type == RIFLE) {
-		if (magazine <= 0) {
-			refillTimer += GetFrameTime();
-			reloadPregress = refillTimer / refillTime;
+	
+}
 
-			if (refillTimer >= refillTime) {
-				magazine = magazineSize;
-				refillTimer = 0.0f;
-				reloadPregress = 0.0f;
-			}
-		}
-	}
-	if (type == SHOTGUN) {
-		if (magazine < magazineSize) {
-			refillTimer += GetFrameTime();
-			reloadPregress = refillTimer / refillTime;
+void Weapon::Reload()
+{
+	if (magazine <= 0) {
+		refillTimer += GetFrameTime();
+		reloadPregress = refillTimer / refillTime;
 
-			if (refillTimer >= refillTime) {
-				magazine++;
-				refillTimer = 0.0f;
-				reloadPregress = 0.0f;
-			}
+		if (refillTimer >= refillTime) {
+			magazine = magazineSize;
+			refillTimer = 0.0f;
+			reloadPregress = 0.0f;
 		}
 	}
 }
