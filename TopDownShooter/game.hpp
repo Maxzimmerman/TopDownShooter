@@ -4,9 +4,11 @@
 #include "camera.hpp"
 #include "enemy.hpp" 
 #include "button.hpp"
+#include "XP.hpp"
 
 class Game {
 public:
+	std::vector<std::unique_ptr<XP>> xps;
 	Player* player;
 	Cameraa* camera;
 	std::vector<std::unique_ptr<Enemy>> enemies;
@@ -29,4 +31,5 @@ public:
 	bool CheckCollision(const Rectangle& firstRect, const Rectangle& secondRect);
 	void Reset(int howManyEnemies);
 	void DrawMagazineAndPrgressbar();
+	void DrawXp();
 };

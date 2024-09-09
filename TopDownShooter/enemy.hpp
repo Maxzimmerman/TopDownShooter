@@ -1,6 +1,7 @@
 #include <raylib.h>
 #include <iostream>
 #include <vector>
+#include "XP.hpp"
 
 class Enemy {
 public:

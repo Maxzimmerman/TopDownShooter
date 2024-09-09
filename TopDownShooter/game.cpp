@@ -23,13 +23,18 @@ void Game::Draw() {
 	DrawLivePoinst();
 	DrawLevel();
 	DrawMagazineAndPrgressbar();
+	DrawXp();
 
-	for (auto& bullet: player->weapon->bullets) {
+	for (auto& bullet : player->weapon->bullets) {
 		bullet.Draw();
 	}
 
 	for (auto& enemy : enemies) {
 		enemy->Draw();
+	}
+
+	for (auto& xp : xps) {
+		xp->Draw();
 	}
 }
 
@@ -61,7 +66,7 @@ void Game::HandleInput() {
 	else if (IsKeyDown(KEY_A))
 		player->MoveLeft();
 	else if (IsKeyDown(KEY_D))
-		player->MoveRight();		
+		player->MoveRight();
 }
 
 void Game::DeleteInactiveLasers() {
@@ -106,6 +111,16 @@ void Game::CheckCollisions()
 		auto it = enemies.begin();
 		while (it != enemies.end()) {
 			if (CheckCollision((*it)->GetRect(), bullet.GetRect())) {
+				// Create xps where enemy died
+				for (int i = 1; i < 4; i++) {
+					std::cout << "dropped xp " <<  i << std::endl;
+					Vector2 pos = (*it)->position;
+					int x = GetRandomValue(20, 60);
+					int y = GetRandomValue(20, 60);
+					Vector2 xpPos = { pos.x + x + i, pos.y + y + i };
+					XPType type = TYPE1;
+					xps.push_back(std::make_unique<XP>(xpPos));
+				}
 				it = enemies.erase(it);
 				bullet.active = false;
 			}
@@ -126,6 +141,18 @@ void Game::CheckCollisions()
 			it++;
 		}
 	}
+
+	// Player -> Xp
+	auto xpI = xps.begin();
+	while (xpI != xps.end()) {
+		if (CheckCollision((*xpI)->getRect(), player->getRect())) {
+			player->xp += (*xpI)->getPoints();
+			xpI = xps.erase(xpI);
+		}
+		else {
+			xpI++;
+		}
+	}
 }
 
 void Game::DrawLivePoinst()
@@ -137,7 +164,7 @@ void Game::DrawLivePoinst()
 
 bool Game::CheckIfWon()
 {
-	if (enemies.size() <= 0)
+	if (enemies.size() <= 0 || player->xp >= 100)
 		return true;
 	else
 		return false;
@@ -156,7 +183,7 @@ void Game::DrawLevel()
 }
 
 bool Game::CheckCollision(const Rectangle& firstRect, const Rectangle& secondRect)
-{	
+{
 	// x from right and left
 	if ((firstRect.x + firstRect.width) >= secondRect.x && firstRect.x <= (secondRect.x + secondRect.width) &&
 		// top and bottom
@@ -170,12 +197,20 @@ bool Game::CheckCollision(const Rectangle& firstRect, const Rectangle& secondRec
 
 void Game::Reset(int howManyEnemies)
 {
+	enemies.clear();
+	xps.clear();
+	player->xp = 0;
 	player->setLivePoints(5);
 	SpawnEnemies(howManyEnemies);
 }
 
 void Game::DrawMagazineAndPrgressbar()
 {
-	player->weapon->DrawReloadProgressBar({player->getPosition().x - 500, player->getPosition().y + 450}, 120, 30);
+	player->weapon->DrawReloadProgressBar({ player->getPosition().x - 500, player->getPosition().y + 450 }, 120, 30);
 	DrawText((std::to_string(player->weapon->getMagazine())).c_str(), player->getPosition().x - 445, player->getPosition().y + 456, 20, WHITE);
+}
+
+void Game::DrawXp()
+{
+	DrawText(std::to_string(player->xp).c_str(), player->getPosition().x - 445, player->getPosition().y - 456, 20, WHITE);
 }

@@ -43,6 +43,12 @@
     <ClCompile Include="Level.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="XP.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="XPType.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="player.hpp">
@@ -70,6 +76,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Level.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="XP.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

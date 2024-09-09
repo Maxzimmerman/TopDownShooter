@@ -149,6 +149,8 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="WeaponType.hpp" />
+    <ClCompile Include="XP.cpp" />
+    <ClCompile Include="XPType.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bullet.hpp" />
@@ -160,6 +162,7 @@
     <ClInclude Include="Level.hpp" />
     <ClInclude Include="player.hpp" />
     <ClInclude Include="Weapon.hpp" />
+    <ClInclude Include="XP.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

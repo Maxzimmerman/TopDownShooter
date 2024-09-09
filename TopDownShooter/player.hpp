@@ -14,6 +14,7 @@ private:
 	int livePoints;
 	Vector2 position;
 public:
+	int xp;
 	std::unique_ptr<Weapon> weapon;
 	Player();
 	void Draw();
@@ -28,4 +29,5 @@ public:
 	int getLivePoints();
 	void setLivePoints(int livePoints);
 	Vector2 getPosition();
+	void setXP(int xp) { this->xp = xp; }
 };
