@@ -113,7 +113,6 @@ void Game::CheckCollisions()
 			if (CheckCollision((*it)->GetRect(), bullet.GetRect())) {
 				// Create xps where enemy died
 				for (int i = 1; i < 4; i++) {
-					std::cout << "dropped xp " <<  i << std::endl;
 					Vector2 pos = (*it)->position;
 					int x = GetRandomValue(20, 60);
 					int y = GetRandomValue(20, 60);

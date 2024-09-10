@@ -4,19 +4,20 @@
 
 Enemy::Enemy()
 {
+    texture = LoadTexture("C:\\Users\\Max Zimmermann\\source\\repos\\TopDownShooter\\assets\\enemies\\two\\idle_0.png");
 	position = { 0, 0 };
-	radius = 5;
+	radius = 10;
 	active = true;
 }
 
 Enemy::Enemy(Vector2 position) {
 	this->position = position;
-	radius = 5;
+	radius = 10;
 	active = true;
 }
 
 void Enemy::Draw() {
-	DrawCircle(position.x, position.y, radius, RED);
+    DrawTexture(texture, position.x, position.y, WHITE);
 }
 
 void Enemy::Update(const Vector2& playerPosition, const std::vector<std::unique_ptr<Enemy>>& enemies) {

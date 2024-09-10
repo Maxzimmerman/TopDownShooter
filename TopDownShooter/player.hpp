@@ -13,6 +13,7 @@ private:
 	float speed;
 	int livePoints;
 	Vector2 position;
+	Texture2D texture;
 public:
 	int xp;
 	std::unique_ptr<Weapon> weapon;

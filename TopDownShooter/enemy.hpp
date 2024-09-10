@@ -5,6 +5,7 @@
 
 class Enemy {
 public:
+	Texture2D texture;
 	Vector2 position;
 	int radius;
 	bool active;

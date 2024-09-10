@@ -5,18 +5,20 @@
 
 Player::Player() {
 	weapon = std::make_unique<Weapon>();
+	texture = LoadTexture("C:\\Users\\Max Zimmermann\\source\\repos\\TopDownShooter\\assets\\characters\\three\\idle_0.png");
 	position.x = GetScreenWidth() / 2;
 	position.y = GetScreenHeight() / 2;
 	radius = 5;
 	speed = 200;
 	color = WHITE;
 	livePoints = 5;
+	xp = 0;
 }
 
 void Player::Draw()
 {
-	if(livePoints > 0)
-		DrawCircle(position.x, position.y, radius, color);
+	if (livePoints > 0)
+		DrawTexture(texture, position.x, position.y, WHITE);
 }
 
 void Player::Update()
