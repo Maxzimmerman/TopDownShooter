@@ -8,6 +8,7 @@ Game::Game()
 {
 	player = new Player();
 	camera = new Cameraa();
+	mineField = new MineField();
 	startButton = new Button();
 	restartButton = new Button();
 	goBackToHomeButton = new Button();
@@ -36,12 +37,15 @@ void Game::Draw() {
 	for (auto& xp : xps) {
 		xp->Draw();
 	}
+
+	mineField->Draw();
 }
 
 void Game::Update() {
 	for (auto& bullet : player->weapon->bullets) {
 		bullet.Update();
 	}
+
 	camera->Update(player->GetCenter());
 	player->Update();
 	player->weapon->Reload();
@@ -51,6 +55,9 @@ void Game::Update() {
 	for (auto& enemy : enemies) {
 		enemy->Update(player->GetCenter(), enemies);
 	}
+
+	mineField->setTarget(player);
+	mineField->Update();
 
 	CheckCollisions();
 }

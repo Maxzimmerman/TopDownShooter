@@ -146,6 +146,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MineField.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="WeaponType.hpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="game.hpp" />
     <ClInclude Include="GameState.hpp" />
     <ClInclude Include="Level.hpp" />
+    <ClInclude Include="MineField.hpp" />
     <ClInclude Include="player.hpp" />
     <ClInclude Include="Weapon.hpp" />
     <ClInclude Include="XP.hpp" />

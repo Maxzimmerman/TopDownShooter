@@ -17,7 +17,7 @@ Enemy::Enemy(Vector2 position) {
 }
 
 void Enemy::Draw() {
-    DrawTexture(texture, position.x, position.y, WHITE);
+    DrawCircle(position.x, position.y, radius, RED);
 }
 
 void Enemy::Update(const Vector2& playerPosition, const std::vector<std::unique_ptr<Enemy>>& enemies) {

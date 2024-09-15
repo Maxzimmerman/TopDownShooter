@@ -18,7 +18,7 @@ Player::Player() {
 void Player::Draw()
 {
 	if (livePoints > 0)
-		DrawTexture(texture, position.x, position.y, WHITE);
+		DrawCircle(position.x, position.y, radius, WHITE);
 }
 
 void Player::Update()

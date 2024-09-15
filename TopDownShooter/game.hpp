@@ -5,12 +5,14 @@
 #include "enemy.hpp" 
 #include "button.hpp"
 #include "XP.hpp"
+#include "MineField.hpp"
 
 class Game {
 public:
 	std::vector<std::unique_ptr<XP>> xps;
 	Player* player;
 	Cameraa* camera;
+	MineField* mineField;
 	std::vector<std::unique_ptr<Enemy>> enemies;
 	int level = 1;
 	Button* startButton;

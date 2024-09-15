@@ -49,6 +49,9 @@
     <ClCompile Include="XPType.hpp">
       <Filter>Headerdateien</Filter>
     </ClCompile>
+    <ClCompile Include="MineField.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="player.hpp">
@@ -79,6 +82,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="XP.hpp">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="MineField.hpp">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

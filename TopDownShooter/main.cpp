@@ -3,6 +3,7 @@
 #include "camera.hpp"
 #include "GameState.hpp"
 #include "Level.hpp"
+#include "MineField.hpp"
 
 int main() {
 	int width = 1500;
