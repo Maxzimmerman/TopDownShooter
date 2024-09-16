@@ -24,10 +24,12 @@ void Weapon::Update()
 
 void Weapon::Reload()
 {
+	// if the magazine is empty set a timer and update the progress
 	if (magazine <= 0) {
 		refillTimer += GetFrameTime();
 		reloadPregress = refillTimer / refillTime;
 
+		// if the timer is up fill up magazine and reset timer
 		if (refillTimer >= refillTime) {
 			magazine = magazineSize;
 			refillTimer = 0.0f;
@@ -38,8 +40,12 @@ void Weapon::Reload()
 
 void Weapon::ShootBullets(const Vector2& mousePosition, const Vector2& playerCenter)
 {
+	// if magazin is not empty
+	// - define direction the bullet should move to
+	// - add bullet two game
+	// - decrement the magazine size
 	if (magazine > 0) {
-		Vector2 direction = { mousePosition.x - position.x, mousePosition.y - position.y };
+		Vector2 direction = Vector2Subtract(mousePosition, position);
 		direction = Vector2Normalize(direction);
 		bullets.push_back(Bullet(playerCenter, direction, 600, GREEN));
 		decrementMagazine();

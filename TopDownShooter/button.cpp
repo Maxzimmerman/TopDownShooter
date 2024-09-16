@@ -18,8 +18,10 @@ void Button::Draw()
 
 bool Button::CheckIfButtonClicked() {
 	Vector2 mousePosition = GetMousePosition();
+	// check if mouse is on button
 	if ((mousePosition.x >= rect.x) && (mousePosition.x <= (rect.x + rect.width)) &&
 		(mousePosition.y >= rect.y) && (mousePosition.y <= (rect.y + rect.height))) {
+		// check if mouse button clicked
 		if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
 			return true;
 		}

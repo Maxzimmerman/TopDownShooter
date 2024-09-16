@@ -4,7 +4,6 @@
 
 Enemy::Enemy()
 {
-    texture = LoadTexture("C:\\Users\\Max Zimmermann\\source\\repos\\TopDownShooter\\assets\\enemies\\two\\idle_0.png");
 	position = { 0, 0 };
 	radius = 10;
 	active = true;
@@ -21,20 +20,23 @@ void Enemy::Draw() {
 }
 
 void Enemy::Update(const Vector2& playerPosition, const std::vector<std::unique_ptr<Enemy>>& enemies) {
-    // Follow player
-    Vector2 direction = { playerPosition.x - position.x, playerPosition.y - position.y };
+    // Move the enemy in the players direction
+    Vector2 direction = Vector2Subtract(playerPosition, position);
     direction = Vector2Normalize(direction);
-    position = { position.x + direction.x * 100 * GetFrameTime(), position.y + direction.y * 100 * GetFrameTime() };
+    position = Vector2Add(position, Vector2Scale(direction, 100 * GetFrameTime()));
 
     // Separation from other enemies
     for (const auto& other : enemies) {
         if (other.get() != this) { // Avoid self-check
-            Vector2 distance = { position.x - other->position.x, position.y - other->position.y };
-            float length = sqrt(distance.x * distance.x + distance.y * distance.y);
+            // get distance between self and other enemy
+            Vector2 direction = Vector2Subtract(position, other->position);
+            float length = Vector2Length(direction);
 
+            // if distance less than 20 seperate them
             if (length < 20.0f) { // Separation distance
-                Vector2 repulsion = Vector2Normalize(distance);
-                position = { position.x + repulsion.x * (20.0f - length) * 100 * GetFrameTime(), position.y + repulsion.y * (20.0f - length) * 100 * GetFrameTime() };
+                Vector2 repulsion = Vector2Normalize(direction);
+                float seperateBy = 20;
+                position = Vector2Add(position, Vector2Scale(repulsion, (seperateBy - length) * 100 * GetFrameTime()));
             }
         }
     }

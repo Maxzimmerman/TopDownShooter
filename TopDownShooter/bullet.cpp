@@ -28,8 +28,11 @@ void Bullet::Draw() {
 }
 
 void Bullet::Update() {
+	// move bullet in the givin direction
 	Vector2 distance = { direction.x * speed * GetFrameTime(), direction.y * speed * GetFrameTime() };
 	position = { position.x + distance.x, position.y + distance.y };
+
+	// set a timer if timer is up delete the bullet
 	if (active) {
 		liveTime -= GetFrameTime();
 		if (liveTime <= 0) {

@@ -20,6 +20,7 @@ Game::Game()
 }
 
 void Game::Draw() {
+	// Dra all gameObjects
 	player->Draw();
 	DrawLivePoinst();
 	DrawLevel();
@@ -42,6 +43,7 @@ void Game::Draw() {
 }
 
 void Game::Update() {
+	// update all gameObjects
 	for (auto& bullet : player->weapon->bullets) {
 		bullet.Update();
 	}
@@ -113,7 +115,7 @@ void Game::DeleteInactiveEnemies()
 
 void Game::CheckCollisions()
 {
-	// Bullets -> Enemy
+	// Check for collision Bullets -> Enemy
 	for (auto& bullet : player->weapon->bullets) {
 		auto it = enemies.begin();
 		while (it != enemies.end()) {
@@ -136,7 +138,7 @@ void Game::CheckCollisions()
 		}
 	}
 
-	// Enemy -> Player
+	// Check for collision Enemy -> Player
 	auto it = enemies.begin();
 	while (it != enemies.end()) {
 		if (CheckCollision((*it)->GetRect(), player->getRect())) {
@@ -148,7 +150,7 @@ void Game::CheckCollisions()
 		}
 	}
 
-	// Player -> Xp
+	// Check for collision Player -> Xp
 	auto xpI = xps.begin();
 	while (xpI != xps.end()) {
 		if (CheckCollision((*xpI)->getRect(), player->getRect())) {
