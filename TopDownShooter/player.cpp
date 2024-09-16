@@ -9,7 +9,7 @@ Player::Player() {
 	position.x = GetScreenWidth() / 2;
 	position.y = GetScreenHeight() / 2;
 	radius = 5;
-	speed = 200;
+	speed = 400;
 	color = WHITE;
 	livePoints = 5;
 	xp = 0;

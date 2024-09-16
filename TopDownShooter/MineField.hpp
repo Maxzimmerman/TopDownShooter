@@ -3,6 +3,7 @@
 #include <raylib.h>
 #include <raymath.h>
 #include "player.hpp"
+#include <string>
 
 class MineField
 {
