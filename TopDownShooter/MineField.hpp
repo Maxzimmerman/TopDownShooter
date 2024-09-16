@@ -12,14 +12,17 @@ private:
 	int radius;
 	float movingTimer;
 	float movingTime;
+	float explodeTimer;
+	float explodeTime;
 	float speed;
 	bool exploded;
+	bool shouldExplode;
 public:
 	MineField();
 	MineField(Vector2 position);
 	void Draw();
 	void Update();
-	void setTarget(Player* player) { target = player; }
+	void setTarget(Player* player) { target = player; } 
 	Rectangle getRect();
 };
 

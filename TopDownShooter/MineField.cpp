@@ -8,7 +8,10 @@ MineField::MineField()
 	speed = 300.0f;
 	movingTime = 1.f;
 	movingTimer = 0.0f;
+	explodeTimer = 20.f;
+	explodeTime = 0.0f;
 	exploded = false;
+	shouldExplode = false;
 }
 
 MineField::MineField(Vector2 position)
@@ -19,7 +22,10 @@ MineField::MineField(Vector2 position)
 	speed = 300.0f;
 	movingTime = 1.f;
 	movingTimer = 0.0f;
+	explodeTimer = 20.f;
+	explodeTime = 0.0f;
 	exploded = false;
+	shouldExplode = false;
 }
 
 void MineField::Draw()
@@ -33,16 +39,20 @@ void MineField::Update()
 {
 	if (CheckCollisionRecs(target->getRect(), this->getRect())) {
 		speed = 0.0f;
-		movingTimer += GetFrameTime();
+		shouldExplode = true;
+	}
 
-		if (movingTimer > movingTime) {
+	if (shouldExplode) {
+		explodeTimer += GetFrameTime();
+
+		if (explodeTimer > explodeTime) {
 			exploded = true;
 		}
 	}
 
 	Vector2 direction = Vector2Subtract(target->GetCenter(), position);
 	direction = Vector2Normalize(direction);
-	position = { position.x + direction.x * speed * GetFrameTime(), position.y + direction.y * speed * GetFrameTime() };
+	position = Vector2Add(position, Vector2Scale(direction, speed * GetFrameTime()));
 }
 
 Rectangle MineField::getRect()
