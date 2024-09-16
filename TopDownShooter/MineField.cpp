@@ -8,7 +8,7 @@ MineField::MineField()
 	speed = 300.0f;
 	movingTime = 1.f;
 	movingTimer = 0.0f;
-	explodeTimer = 2000.f;
+	explodeTimer = 5.f;
 	explodeTime = 0.0f;
 	exploded = false;
 	shouldExplode = false;
@@ -22,7 +22,7 @@ MineField::MineField(Vector2 position)
 	speed = 300.0f;
 	movingTime = 1.f;
 	movingTimer = 0.0f;
-	explodeTimer = 2000.f;
+	explodeTimer = 5.f;
 	explodeTime = 0.0f;
 	exploded = false;
 	shouldExplode = false;
