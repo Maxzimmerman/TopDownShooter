@@ -24,6 +24,7 @@ public:
 	void Draw();
 	void Update();
 	void setTarget(Player* player) { target = player; } 
+	void Explode();
 	Rectangle getRect();
 };
 

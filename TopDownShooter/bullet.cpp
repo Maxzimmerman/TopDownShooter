@@ -19,7 +19,15 @@ Bullet::Bullet(const Vector2& position, const Vector2& direction, int speed, con
 }
 
 Bullet::Bullet() {
-
+	position = {};
+	this->rect.width = 5;
+	this->rect.height = 10;
+	rect = {};
+	this->direction = {};
+	this->color = {};
+	this->speed = {};
+	this->active = true;
+	this->liveTime = 1.0f;
 }
 
 void Bullet::Draw() {

@@ -39,6 +39,7 @@ void Game::Draw() {
 		xp->Draw();
 	}
 
+	player->weapon->Update();
 	mineField->Draw();
 }
 
@@ -50,7 +51,6 @@ void Game::Update() {
 
 	camera->Update(player->GetCenter());
 	player->Update();
-	player->weapon->Reload();
 	DeleteInactiveLasers();
 	DeleteInactiveEnemies();
 
@@ -68,14 +68,16 @@ void Game::HandleInput() {
 	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 		player->weapon->ShootBullets(GetMousePosition(), player->GetCenter());
 	}
-	else if (IsKeyDown(KEY_W))
+	if (IsKeyDown(KEY_W))
 		player->MoveUp();
-	else if (IsKeyDown(KEY_S))
+	if (IsKeyDown(KEY_S))
 		player->MoveDown();
-	else if (IsKeyDown(KEY_A))
+	if (IsKeyDown(KEY_A))
 		player->MoveLeft();
-	else if (IsKeyDown(KEY_D))
+	if (IsKeyDown(KEY_D))
 		player->MoveRight();
+	if (IsKeyPressed(KEY_R))
+		player->weapon->ShouldReload();
 }
 
 void Game::DeleteInactiveLasers() {
@@ -113,6 +115,20 @@ void Game::DeleteInactiveEnemies()
 	}
 }
 
+void Game::dropXp(Vector2 position)
+{
+	// Create 3 xps where enemy died
+	std::cout << "died" << std::endl;
+	for (int i = 1; i < 4; i++) {
+		Vector2 pos = position;
+		int x = GetRandomValue(20, 60);
+		int y = GetRandomValue(20, 60);
+		Vector2 xpPos = { pos.x + x + i, pos.y + y + i };
+		XPType type = TYPE1;
+		xps.push_back(std::make_unique<XP>(xpPos));
+	}
+}
+
 void Game::CheckCollisions()
 {
 	// Check for collision Bullets -> Enemy
@@ -120,17 +136,21 @@ void Game::CheckCollisions()
 		auto it = enemies.begin();
 		while (it != enemies.end()) {
 			if (CheckCollision((*it)->GetRect(), bullet.GetRect())) {
-				// Create xps where enemy died
-				for (int i = 1; i < 4; i++) {
-					Vector2 pos = (*it)->position;
-					int x = GetRandomValue(20, 60);
-					int y = GetRandomValue(20, 60);
-					Vector2 xpPos = { pos.x + x + i, pos.y + y + i };
-					XPType type = TYPE1;
-					xps.push_back(std::make_unique<XP>(xpPos));
+				// if enemy & bullet collide and enemy alive take one livepoint
+				if ((*it)->getLivePoinsts() > 0) {
+					// take livepoint & set bullet inactive
+					std::cout << "take one" << std::to_string((*it)->livePoints).c_str() << std::endl;
+					(*it)->livePoints--;
+					bullet.active = false;
 				}
-				it = enemies.erase(it);
-				bullet.active = false;
+				// if enemy & bullet collide and enemy dead remove from vector
+				if ((*it)->getLivePoinsts() <= 0) {
+					// Create xps where enemy died
+					dropXp((*it)->position);
+					// if bullet and enemy collide delete enemy & set bullet inactive
+					it = enemies.erase(it);
+					bullet.active = false;
+				}
 			}
 			else {
 				++it;
@@ -142,6 +162,7 @@ void Game::CheckCollisions()
 	auto it = enemies.begin();
 	while (it != enemies.end()) {
 		if (CheckCollision((*it)->GetRect(), player->getRect())) {
+			// if player and enemy collide delete enemy
 			it = enemies.erase(it);
 			player->TakeLivePoints();
 		}
@@ -154,6 +175,7 @@ void Game::CheckCollisions()
 	auto xpI = xps.begin();
 	while (xpI != xps.end()) {
 		if (CheckCollision((*xpI)->getRect(), player->getRect())) {
+			// if player picks xp increase player xp and delete xp
 			player->xp += (*xpI)->getPoints();
 			xpI = xps.erase(xpI);
 		}

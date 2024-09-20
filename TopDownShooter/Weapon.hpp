@@ -17,6 +17,7 @@ private:
 	float reloadPregress;
 	Vector2 position;
 	WeaponType type;
+	bool shouldReload;
 public:
 	std::vector<Bullet> bullets;
 	Weapon();
@@ -29,5 +30,6 @@ public:
 	void decrementMagazine();
 	void DrawReloadProgressBar(const Vector2& barPosition, int width, int height);
 	void setType(const WeaponType& type);
+	void ShouldReload() { shouldReload = true; }
 };
 

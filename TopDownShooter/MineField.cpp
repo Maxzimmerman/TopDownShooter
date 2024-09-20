@@ -7,9 +7,9 @@ MineField::MineField()
 	radius = 100;
 	speed = 300.0f;
 	movingTime = 1.f;
-	movingTimer = 0.0f;
-	explodeTimer = 5.f;
-	explodeTime = 0.0f;
+	movingTimer = 5.0f;
+	explodeTimer = 0.f;
+	explodeTime = 0.5f;
 	exploded = false;
 	shouldExplode = false;
 }
@@ -22,8 +22,8 @@ MineField::MineField(Vector2 position)
 	speed = 300.0f;
 	movingTime = 1.f;
 	movingTimer = 0.0f;
-	explodeTimer = 5.f;
-	explodeTime = 0.0f;
+	explodeTimer = 0.f;
+	explodeTime = 0.5f;
 	exploded = false;
 	shouldExplode = false;
 }
@@ -31,10 +31,10 @@ MineField::MineField(Vector2 position)
 void MineField::Draw()
 {
 	Color color = { 255, 0, 0, 128 };
-	if(!exploded)
+	if (!exploded)
 		DrawCircle(position.x, position.y, radius, color);
 	// Draw timer till mine should explode
-	if(!exploded && shouldExplode)
+	if (!exploded && shouldExplode)
 		DrawText(std::to_string(explodeTimer).c_str(), position.x, position.y, 20, RED);
 }
 
@@ -45,22 +45,27 @@ void MineField::Update()
 		speed = 0.0f;
 		shouldExplode = true;
 	}
-	// if the mine stopped moving
-	// - a timer counts to 5
-	// - - if timer is up the mine dissapears
-	else if (shouldExplode) {
-		explodeTimer += GetFrameTime();
 
-		if (explodeTimer > explodeTime) {
-			exploded = true;
-		}
-	}
+	if (shouldExplode)
+		Explode();
 
 	// if mine should not explode and dosen't collide with player
 	// - it should just follow the player
 	Vector2 direction = Vector2Subtract(target->GetCenter(), position);
 	direction = Vector2Normalize(direction);
 	position = Vector2Add(position, Vector2Scale(direction, speed * GetFrameTime()));
+}
+
+void MineField::Explode()
+{
+	// if the mine stopped moving
+	// - a timer counts to 5
+	// - - if timer is up the mine dissapears
+	explodeTimer += GetFrameTime();
+
+	if (explodeTimer > explodeTime) {
+		exploded = true;
+	}
 }
 
 Rectangle MineField::getRect()

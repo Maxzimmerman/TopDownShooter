@@ -34,4 +34,5 @@ public:
 	void Reset(int howManyEnemies);
 	void DrawMagazineAndPrgressbar();
 	void DrawXp();
+	void dropXp(Vector2 position);
 };

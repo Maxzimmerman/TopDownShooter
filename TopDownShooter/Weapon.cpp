@@ -10,6 +10,7 @@ Weapon::Weapon()
 	position.x = GetScreenWidth() / 2;
 	position.y = GetScreenHeight() / 2;
 	type = DEFAULT;
+	shouldReload = false;
 }
 
 void Weapon::Draw()
@@ -19,7 +20,8 @@ void Weapon::Draw()
 
 void Weapon::Update()
 {
-	
+	if (shouldReload)
+		Reload();
 }
 
 void Weapon::Reload()
@@ -34,6 +36,7 @@ void Weapon::Reload()
 			magazine = magazineSize;
 			refillTimer = 0.0f;
 			reloadPregress = 0.0f;
+			shouldReload = false;
 		}
 	}
 }
