@@ -22,9 +22,9 @@ public:
 	MineField();
 	MineField(Vector2 position);
 	void Draw();
-	void Update();
+	void Update(Player* player);
 	void setTarget(Player* player) { target = player; } 
-	void Explode();
+	void Explode(Player* player);
 	Rectangle getRect();
 };
 

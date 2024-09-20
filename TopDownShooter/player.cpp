@@ -13,6 +13,7 @@ Player::Player() {
 	color = WHITE;
 	livePoints = 5;
 	xp = 0;
+	alive = true;
 }
 
 void Player::Draw()
@@ -54,6 +55,12 @@ Rectangle Player::getRect() {
 void Player::TakeLivePoints()
 {
 	livePoints--;
+}
+
+void Player::killPlayer()
+{
+	this->livePoints = 0;
+
 }
 
 int Player::getLivePoints()

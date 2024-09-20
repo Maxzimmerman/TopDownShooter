@@ -38,7 +38,7 @@ void MineField::Draw()
 		DrawText(std::to_string(explodeTimer).c_str(), position.x, position.y, 20, RED);
 }
 
-void MineField::Update()
+void MineField::Update(Player* player)
 {
 	// if player and mine collide the mine should not move
 	if (CheckCollisionRecs(target->getRect(), this->getRect())) {
@@ -46,8 +46,7 @@ void MineField::Update()
 		shouldExplode = true;
 	}
 
-	if (shouldExplode)
-		Explode();
+	Explode(player);
 
 	// if mine should not explode and dosen't collide with player
 	// - it should just follow the player
@@ -56,15 +55,18 @@ void MineField::Update()
 	position = Vector2Add(position, Vector2Scale(direction, speed * GetFrameTime()));
 }
 
-void MineField::Explode()
+void MineField::Explode(Player* player)
 {
-	// if the mine stopped moving
-	// - a timer counts to 5
-	// - - if timer is up the mine dissapears
-	explodeTimer += GetFrameTime();
+	if (shouldExplode) {
+		// if the mine stopped moving
+		// - a timer counts to 5
+		// - - if timer is up the mine dissapears and the player should die
+		explodeTimer += GetFrameTime();
 
-	if (explodeTimer > explodeTime) {
-		exploded = true;
+		if (explodeTimer > explodeTime) {
+			exploded = true;
+			player->killPlayer();
+		}
 	}
 }
 

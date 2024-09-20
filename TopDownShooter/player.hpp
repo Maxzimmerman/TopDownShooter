@@ -14,6 +14,7 @@ private:
 	int livePoints;
 	Vector2 position;
 	Texture2D texture;
+	bool alive;
 public:
 	int xp;
 	std::unique_ptr<Weapon> weapon;
@@ -27,8 +28,12 @@ public:
 	Vector2 GetCenter();
 	Rectangle getRect();
 	void TakeLivePoints();
+	void TakeLivePoints(int livePoints) { this->livePoints -= livePoints; }
+	void killPlayer();
 	int getLivePoints();
 	void setLivePoints(int livePoints);
 	Vector2 getPosition();
 	void setXP(int xp) { this->xp = xp; }
+	void setAlive(bool alive) { this->alive = alive; }
+	bool isAlive() { return alive; }
 };

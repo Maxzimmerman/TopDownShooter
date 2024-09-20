@@ -59,7 +59,7 @@ void Game::Update() {
 	}
 
 	mineField->setTarget(player);
-	mineField->Update();
+	mineField->Update(player);
 
 	CheckCollisions();
 }
