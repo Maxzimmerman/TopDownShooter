@@ -4,16 +4,25 @@ Player::Player() {
     width = 50;
     height = 50;
     position = {0,0};
+    gravity = 40.0f;
 }
 
 Player::Player(Vector2 position) {
     width = 50;
     height = 50;
-    position - position;
+    position = position;
+    gravity = 40.0f;
+}
+
+Player::Player(Vector2 position, float gravity) {
+    width = 50;
+    height = 50;
+    position = position;
+    this->gravity = gravity;
 }
 
 void Player::Update() {
-    position.y += 20 * GetFrameTime();
+    position = { position.x, position.y + gravity * GetFrameTime() };
 }
 
 void Player::Draw() {
